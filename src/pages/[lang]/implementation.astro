@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import CrossRefStrip from '../../components/CrossRefStrip.astro'
+import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro'
 import { useTranslations, type Lang } from '../../i18n'
 
 export function getStaticPaths() {
@@ -34,36 +35,7 @@ const base = `/${lang}`
       <div class="section-label">{i.architecture.label}</div>
       <h2>{i.architecture.title}</h2>
 
-      <pre style="margin: 1.5rem 0"><code>┌─────────────────────────────────────────────────────────────┐
-│                    Context Nexus System                      │
-│                                                             │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐  │
-│  │  Knowledge   │    │    Intent    │    │  Contracts   │  │
-│  │  ── RAG ──   │    │  ── CI ───   │    │  ── SP ───   │  │
-│  └──────┬───────┘    └──────┬───────┘    └──────┬───────┘  │
-│         │                  │                   │           │
-│  ┌──────┴───────────────────┴───────────────────┴───────┐  │
-│  │                  Context Assembler                    │  │
-│  │   • Traverse inheritance chain (Org → BU → Team)     │  │
-│  │   • Validate Contracts (block unapproved exceptions)  │  │
-│  │   • Assemble TaskBrief for the agent runtime         │  │
-│  └─────────────────────────┬─────────────────────────────┘  │
-│                            │                               │
-│  ┌─────────────────────────▼─────────────────────────────┐  │
-│  │                   Agent Runtime                        │  │
-│  │   Plan → Tool → Observe loop · Session memory         │  │
-│  └─────────────────────────┬─────────────────────────────┘  │
-│                            │                               │
-│  ┌─────────────────────────▼─────────────────────────────┐  │
-│  │                   MCP Skills                           │  │
-│  │   Operations runbooks · Contracts verification tools  │  │
-│  └───────────────────────────────────────────────────────┘  │
-│                                                             │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │                   Observability                        │  │
-│  │   Langfuse: assembly · quality gates · RAG quality    │  │
-│  └───────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘</code></pre>
+      <ArchitectureDiagram />
 
       <div class="grid-3" style="margin-top: 1.5rem">
         {i.architecture.components.map((c) => (
