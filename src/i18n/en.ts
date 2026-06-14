@@ -22,9 +22,9 @@ export default {
   footer: {
     copy: '© 2026 Context Nexus · A framework by Zenika · Not an official product.',
     links: [
-      { label: 'Concepts', href: '/concepts' },
-      { label: 'Implementation', href: '/implementation' },
-      { label: 'Example', href: '/example' },
+      { label: 'Concepts', href: '/en/concepts' },
+      { label: 'Implementation', href: '/en/implementation' },
+      { label: 'Example', href: '/en/example' },
     ],
   },
 
@@ -40,9 +40,9 @@ export default {
       description:
         'A living knowledge system co-built by humans and AI agents. The systemic core every team feeds with intention, and that AI enriches with observation.',
       cta1: 'Read the concepts',
-      cta1Href: '/concepts',
+      cta1Href: '/en/concepts',
       cta2: 'Start in 2 hours',
-      cta2Href: '/implementation#bootstrap',
+      cta2Href: '/en/implementation#bootstrap',
     },
     problem: {
       label: 'Why it exists',
@@ -116,11 +116,11 @@ Designed for <strong>two pizza teams</strong> — autonomous, cross-functional g
       title: 'Ready to dive in?',
       subtitle: 'Start with the concepts, explore the technical implementation, or follow the story of team-search at MarketPlace SA.',
       btn1: 'Concepts →',
-      btn1Href: '/concepts',
+      btn1Href: '/en/concepts',
       btn2: 'Implementation →',
-      btn2Href: '/implementation',
+      btn2Href: '/en/implementation',
       btn3: 'Example →',
-      btn3Href: '/example',
+      btn3Href: '/en/example',
     },
   },
 
