@@ -1,0 +1,13 @@
+---
+type Register = 'knowledge' | 'intent' | 'contracts' | 'operations'
+
+interface Props {
+  register: Register
+  label: string
+  href: string
+}
+
+const { register, label, href } = Astro.props
+---
+
+<a href={href} class={`chip chip--${register}`}>{label}</a>

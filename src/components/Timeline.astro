@@ -1,0 +1,23 @@
+---
+interface TimelineItem {
+  day: string
+  title: string
+  desc: string
+}
+
+interface Props {
+  items: TimelineItem[]
+}
+
+const { items } = Astro.props
+---
+
+<div class="timeline">
+  {items.map(item => (
+    <div class="timeline-item">
+      <div class="timeline-item__day">{item.day}</div>
+      <div class="timeline-item__title">{item.title}</div>
+      <p class="timeline-item__desc">{item.desc}</p>
+    </div>
+  ))}
+</div>

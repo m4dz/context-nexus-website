@@ -1,0 +1,118 @@
+---
+import { useTranslations, type Lang } from '../i18n'
+
+interface Props { lang: Lang }
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const base = `/${lang}`
+const current = Astro.url.pathname
+---
+
+<nav class="nav">
+  <div class="container nav__inner">
+    <a href={base} class="nav__logo">
+      <span class="nav__logo-dot"></span>
+      Context Nexus
+    </a>
+
+    <ul class="nav__links">
+      <li>
+        <a href={`${base}/concepts`}
+           aria-current={current.includes('/concepts') ? 'page' : undefined}>
+          {t.nav.concepts}
+        </a>
+      </li>
+      <li class="nav__dropdown">
+        <a href={`${base}/registers/knowledge`}
+           aria-current={current.includes('/registers/') ? 'page' : undefined}>
+          {t.nav.registers}
+        </a>
+        <ul class="nav__submenu">
+          <li>
+            <a href={`${base}/registers/knowledge`} class="nav__sub-link nav__sub-link--knowledge">
+              <span class="nav__sub-dot"></span>{t.nav.knowledge}
+            </a>
+          </li>
+          <li>
+            <a href={`${base}/registers/intent`} class="nav__sub-link nav__sub-link--intent">
+              <span class="nav__sub-dot"></span>{t.nav.intent}
+            </a>
+          </li>
+          <li>
+            <a href={`${base}/registers/contracts`} class="nav__sub-link nav__sub-link--contracts">
+              <span class="nav__sub-dot"></span>{t.nav.contracts}
+            </a>
+          </li>
+          <li>
+            <a href={`${base}/registers/operations`} class="nav__sub-link nav__sub-link--operations">
+              <span class="nav__sub-dot"></span>{t.nav.operations}
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href={`${base}/implementation`}
+           aria-current={current.includes('/implementation') ? 'page' : undefined}>
+          {t.nav.implementation}
+        </a>
+      </li>
+      <li>
+        <a href={`${base}/example`}
+           aria-current={current.includes('/example') ? 'page' : undefined}>
+          {t.nav.example}
+        </a>
+      </li>
+      <li>
+        <a href={t.nav.langHref} class="nav__lang">{t.nav.langLabel}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav__dropdown { position: relative; }
+
+  .nav__submenu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+    list-style: none;
+    min-width: 180px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 200;
+  }
+
+  .nav__dropdown:hover .nav__submenu,
+  .nav__dropdown:focus-within .nav__submenu {
+    display: block;
+  }
+
+  .nav__sub-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: var(--radius-sm) !important;
+    font-size: 0.85rem !important;
+    color: var(--text-muted) !important;
+  }
+
+  .nav__sub-link:hover { color: var(--text) !important; }
+
+  .nav__sub-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nav__sub-link--knowledge .nav__sub-dot { background: var(--knowledge); }
+  .nav__sub-link--intent    .nav__sub-dot { background: var(--intent); }
+  .nav__sub-link--contracts .nav__sub-dot { background: var(--contracts); }
+  .nav__sub-link--operations .nav__sub-dot { background: var(--operations); }
+</style>

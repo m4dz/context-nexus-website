@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import RegisterCard from '../../components/RegisterCard.astro'
+import Callout from '../../components/Callout.astro'
+import Timeline from '../../components/Timeline.astro'
+import { useTranslations, type Lang } from '../../i18n'
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'fr' } }]
+}
+
+const { lang } = Astro.params as { lang: Lang }
+const t = useTranslations(lang)
+const h = t.home
+const base = `/${lang}`
+---
+
+<Layout lang={lang} title={h.meta.title} description={t.site.description}>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="graph-bg"></div>
+    <div class="container container--content">
+      <div class="hero__label">{h.hero.label}</div>
+      <h1 class="hero__title">{h.hero.title}</h1>
+      <p class="hero__tagline">"{h.hero.tagline}"</p>
+      <p class="hero__description">{h.hero.description}</p>
+      <div class="hero__actions">
+        <a href={h.hero.cta1Href} class="btn btn--primary">{h.hero.cta1}</a>
+        <a href={h.hero.cta2Href} class="btn btn--secondary">{h.hero.cta2}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="section" style="border-top: 1px solid var(--border)">
+    <div class="container container--content">
+      <div class="section-label">{h.problem.label}</div>
+      <h2 class="section-title">{h.problem.title}</h2>
+      <div class="section-subtitle" set:html={h.problem.body.replace(/\n\n/g, '</p><p>')} />
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section class="section" style="background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border)">
+    <div class="container container--content">
+      <div class="section-label">{h.solution.label}</div>
+      <h2 class="section-title">{h.solution.title}</h2>
+      <div class="section-subtitle" set:html={h.solution.body.replace(/\n\n/g, '</p><p>')} />
+      <Callout variant="info">
+        <p><em>{h.solution.invariant}</em></p>
+      </Callout>
+    </div>
+  </section>
+
+  <!-- 4 Registers -->
+  <section class="section">
+    <div class="container container--content">
+      <div class="section-label">{h.registers.label}</div>
+      <h2 class="section-title">{h.registers.title}</h2>
+      <p class="section-subtitle">{h.registers.subtitle}</p>
+
+      <div class="grid-4" style="margin-top: 2.5rem">
+        <RegisterCard
+          register="knowledge"
+          label={h.registers.knowledge.label}
+          sublabel={h.registers.knowledge.sublabel}
+          desc={h.registers.knowledge.desc}
+          href={`${base}/registers/knowledge`}
+        />
+        <RegisterCard
+          register="intent"
+          label={h.registers.intent.label}
+          sublabel={h.registers.intent.sublabel}
+          desc={h.registers.intent.desc}
+          href={`${base}/registers/intent`}
+        />
+        <RegisterCard
+          register="contracts"
+          label={h.registers.contracts.label}
+          sublabel={h.registers.contracts.sublabel}
+          desc={h.registers.contracts.desc}
+          href={`${base}/registers/contracts`}
+        />
+        <RegisterCard
+          register="operations"
+          label={h.registers.operations.label}
+          sublabel={h.registers.operations.sublabel}
+          desc={h.registers.operations.desc}
+          href={`${base}/registers/operations`}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Maturity timeline -->
+  <section class="section" style="background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border)">
+    <div class="container container--content">
+      <div class="section-label">{h.maturity.label}</div>
+      <h2 class="section-title">{h.maturity.title}</h2>
+      <p class="section-subtitle">{h.maturity.subtitle}</p>
+      <div style="margin-top: 2.5rem">
+        <Timeline items={[h.maturity.day1, h.maturity.day30, h.maturity.day90, h.maturity.day180]} />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container container--content text-center">
+      <h2 class="section-title">{h.cta.title}</h2>
+      <p class="section-subtitle" style="margin: 0 auto 2.5rem">{h.cta.subtitle}</p>
+      <div class="hero__actions" style="justify-content: center">
+        <a href={h.cta.btn1Href} class="btn btn--primary">{h.cta.btn1}</a>
+        <a href={h.cta.btn2Href} class="btn btn--secondary">{h.cta.btn2}</a>
+        <a href={h.cta.btn3Href} class="btn btn--secondary">{h.cta.btn3}</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

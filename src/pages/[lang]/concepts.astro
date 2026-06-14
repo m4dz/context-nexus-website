@@ -1,0 +1,270 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import RegisterCard from '../../components/RegisterCard.astro'
+import Callout from '../../components/Callout.astro'
+import Timeline from '../../components/Timeline.astro'
+import { useTranslations, type Lang } from '../../i18n'
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'fr' } }]
+}
+
+const { lang } = Astro.params as { lang: Lang }
+const t = useTranslations(lang)
+const c = t.concepts
+const h = t.home
+const base = `/${lang}`
+---
+
+<Layout lang={lang} title={c.meta.title}>
+
+  <div class="page-header">
+    <div class="container container--content">
+      <div class="page-header__breadcrumb">
+        <a href={`/${lang}`}>{c.header.breadcrumb}</a>
+        <span>›</span>
+        <span>{c.header.title}</span>
+      </div>
+      <h1 class="page-header__title">{c.header.title}</h1>
+      <p class="page-header__desc">{c.header.desc}</p>
+    </div>
+  </div>
+
+  <div class="container container--content">
+
+    <!-- Definition -->
+    <section class="section--sm">
+      <div class="section-label">{c.intro.label}</div>
+      <h2>{c.intro.title}</h2>
+      <div set:html={c.intro.body.replace(/\n\n/g, '</p><p><span class="text-muted">')} />
+    </section>
+
+    <hr />
+
+    <!-- Two actors -->
+    <section class="section--sm">
+      <h2>{c.actors.title}</h2>
+      <div class="asymmetry" style="margin-top: 1.5rem">
+        <div class="asymmetry__cell asymmetry__cell--human">
+          <div class="asymmetry__actor">{c.actors.human.actor}</div>
+          <p class="asymmetry__text">{c.actors.human.text}</p>
+        </div>
+        <div class="asymmetry__cell asymmetry__cell--ai">
+          <div class="asymmetry__actor">{c.actors.ai.actor}</div>
+          <p class="asymmetry__text">{c.actors.ai.text}</p>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Registers -->
+    <section class="section--sm">
+      <h2>{c.registers.title}</h2>
+      <p>{c.registers.subtitle}</p>
+      <div class="grid-4" style="margin-top: 1.5rem">
+        <RegisterCard
+          register="knowledge"
+          label={h.registers.knowledge.label}
+          sublabel={h.registers.knowledge.sublabel}
+          desc={h.registers.knowledge.desc}
+          href={`${base}/registers/knowledge`}
+        />
+        <RegisterCard
+          register="intent"
+          label={h.registers.intent.label}
+          sublabel={h.registers.intent.sublabel}
+          desc={h.registers.intent.desc}
+          href={`${base}/registers/intent`}
+        />
+        <RegisterCard
+          register="contracts"
+          label={h.registers.contracts.label}
+          sublabel={h.registers.contracts.sublabel}
+          desc={h.registers.contracts.desc}
+          href={`${base}/registers/contracts`}
+        />
+        <RegisterCard
+          register="operations"
+          label={h.registers.operations.label}
+          sublabel={h.registers.operations.sublabel}
+          desc={h.registers.operations.desc}
+          href={`${base}/registers/operations`}
+        />
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Register loops -->
+    <section class="section--sm">
+      <div class="section-label">{c.loops.label}</div>
+      <h2>{c.loops.title}</h2>
+      <div set:html={`<p>${c.loops.body.replace(/\n\n/g, '</p><p>')}</p>`} />
+
+      <!-- Visual loop diagram -->
+      <div style="margin: 2rem 0; padding: 2rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); display: flex; justify-content: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-size: 0.85rem; max-width: 480px; width: 100%">
+          <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap">
+            <span style="background: var(--knowledge-bg); color: var(--knowledge); border: 1px solid rgba(96,165,250,0.3); padding: 0.4rem 1rem; border-radius: 100px; font-weight: 600">Knowledge</span>
+            <span style="color: var(--text-subtle); align-self: center">→</span>
+            <span style="background: var(--intent-bg); color: var(--intent); border: 1px solid rgba(52,211,153,0.3); padding: 0.4rem 1rem; border-radius: 100px; font-weight: 600">Intent</span>
+            <span style="color: var(--text-subtle); align-self: center">→</span>
+            <span style="background: var(--contracts-bg); color: var(--contracts); border: 1px solid rgba(251,191,36,0.3); padding: 0.4rem 1rem; border-radius: 100px; font-weight: 600">Contracts</span>
+            <span style="color: var(--text-subtle); align-self: center">→</span>
+            <span style="background: var(--operations-bg); color: var(--operations); border: 1px solid rgba(248,113,113,0.3); padding: 0.4rem 1rem; border-radius: 100px; font-weight: 600">Operations</span>
+          </div>
+          <div style="color: var(--text-subtle); font-size: 0.75rem; display: flex; align-items: center; gap: 0.5rem">
+            <span>↑</span>
+            <span>AI feedback loops (Ship · Sync · Shape)</span>
+            <span>↓</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>{c.loops.aiLoopsTitle}</h3>
+      <div set:html={`<p>${c.loops.aiLoopsBody.replace(/\n\n/g, '</p><p>')}</p>`} />
+    </section>
+
+    <hr />
+
+    <!-- Consumption modes -->
+    <section class="section--sm">
+      <div class="section-label">{c.consumption.label}</div>
+      <h2>{c.consumption.title}</h2>
+
+      <div class="grid-2" style="margin-top: 1.5rem">
+        <div class="feature-card">
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem">
+            <span class="mode-badge mode-badge--system">System Prompt</span>
+          </div>
+          <p style="font-size: 0.9rem">{c.consumption.system.desc}</p>
+        </div>
+        <div class="feature-card">
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem">
+            <span class="mode-badge mode-badge--rag">RAG</span>
+          </div>
+          <p style="font-size: 0.9rem">{c.consumption.rag.desc}</p>
+        </div>
+        <div class="feature-card">
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem">
+            <span class="mode-badge mode-badge--context">Context Injection</span>
+          </div>
+          <p style="font-size: 0.9rem">{c.consumption.context.desc}</p>
+        </div>
+        <div class="feature-card">
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem">
+            <span class="mode-badge mode-badge--skill">Skills / MCP</span>
+          </div>
+          <p style="font-size: 0.9rem">{c.consumption.skill.desc}</p>
+        </div>
+      </div>
+
+      <!-- Mapping table -->
+      <h3 style="margin-top: 2rem">Register × Mode mapping</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Register</th>
+            <th><span class="mode-badge mode-badge--system">System</span></th>
+            <th><span class="mode-badge mode-badge--rag">RAG</span></th>
+            <th><span class="mode-badge mode-badge--context">Context</span></th>
+            <th><span class="mode-badge mode-badge--skill">Skills</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color: var(--knowledge)">Knowledge</strong></td>
+            <td>Conventions, anti-patterns</td>
+            <td>Domain knowledge, Decision Contexts</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--intent)">Intent</strong></td>
+            <td>Universal Decision Directives</td>
+            <td>—</td>
+            <td>Spec, task-specific directives</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--contracts)">Contracts</strong></td>
+            <td>All assertions</td>
+            <td>—</td>
+            <td>—</td>
+            <td>Verification tools</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--operations)">Operations</strong></td>
+            <td>—</td>
+            <td>Incident search</td>
+            <td>—</td>
+            <td>Runbooks, playbooks</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr />
+
+    <!-- Inheritance -->
+    <section class="section--sm">
+      <div class="section-label">{c.inheritance.label}</div>
+      <h2>{c.inheritance.title}</h2>
+      <div set:html={`<p>${c.inheritance.body.replace(/\n\n/g, '</p><p>')}</p>`} />
+
+      <pre style="margin-top: 1.5rem"><code>Nexus Org (root)
+  └── Nexus Intermediate  (BU / Tribe / Programme / Value Stream)
+        └── Nexus Team    (two pizza team)</code></pre>
+
+      <h3>{c.inheritance.enforcement.title}</h3>
+      <div set:html={`<p>${c.inheritance.enforcement.body}</p>`} />
+
+      <pre><code>---
+register: contracts
+level: team
+exception-to: null              # pure extension — always allowed
+exception-approved-by: null
+---
+
+---
+register: contracts
+level: team
+exception-to: org/contracts/security.md    # declared exception
+exception-approved-by: security-guild      # validated by org owner
+---</code></pre>
+    </section>
+
+    <hr />
+
+    <!-- Governance -->
+    <section class="section--sm">
+      <div class="section-label">{c.governance.label}</div>
+      <h2>{c.governance.title}</h2>
+      <p>{c.governance.body}</p>
+      <div set:html={`<p>${c.governance.statuses}</p>`} />
+
+      <div style="display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; align-items: center; font-size: 0.8rem; color: var(--text-muted)">
+        <code style="font-size: 0.8rem">draft</code>
+        <span>→</span>
+        <code style="font-size: 0.8rem">active</code>
+        <span>→</span>
+        <code style="font-size: 0.8rem">stale</code>
+        <span>→</span>
+        <code style="font-size: 0.8rem">deprecated</code>
+        <span>/</span>
+        <code style="font-size: 0.8rem">superseded</code>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Maturity -->
+    <section class="section--sm">
+      <div class="section-label">{c.maturity.label}</div>
+      <h2>{c.maturity.title}</h2>
+      <Timeline items={[h.maturity.day1, h.maturity.day30, h.maturity.day90, h.maturity.day180]} />
+    </section>
+
+  </div>
+</Layout>

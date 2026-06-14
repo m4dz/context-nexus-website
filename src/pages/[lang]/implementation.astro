@@ -1,0 +1,493 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import CrossRefStrip from '../../components/CrossRefStrip.astro'
+import { useTranslations, type Lang } from '../../i18n'
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'fr' } }]
+}
+
+const { lang } = Astro.params as { lang: Lang }
+const t = useTranslations(lang)
+const i = t.implementation
+const base = `/${lang}`
+---
+
+<Layout lang={lang} title={i.meta.title}>
+
+  <div class="page-header">
+    <div class="container container--content">
+      <div class="page-header__breadcrumb">
+        <a href={`/${lang}`}>{i.header.breadcrumb}</a>
+        <span>›</span>
+        <span>{i.header.title}</span>
+      </div>
+      <h1 class="page-header__title">{i.header.title}</h1>
+      <p class="page-header__desc">{i.header.desc}</p>
+    </div>
+  </div>
+
+  <div class="container container--content">
+
+    <!-- Architecture -->
+    <section class="section--sm">
+      <div class="section-label">{i.architecture.label}</div>
+      <h2>{i.architecture.title}</h2>
+
+      <pre style="margin: 1.5rem 0"><code>┌─────────────────────────────────────────────────────────────┐
+│                    Context Nexus System                      │
+│                                                             │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐  │
+│  │  Knowledge   │    │    Intent    │    │  Contracts   │  │
+│  │  ── RAG ──   │    │  ── CI ───   │    │  ── SP ───   │  │
+│  └──────┬───────┘    └──────┬───────┘    └──────┬───────┘  │
+│         │                  │                   │           │
+│  ┌──────┴───────────────────┴───────────────────┴───────┐  │
+│  │                  Context Assembler                    │  │
+│  │   • Traverse inheritance chain (Org → BU → Team)     │  │
+│  │   • Validate Contracts (block unapproved exceptions)  │  │
+│  │   • Assemble TaskBrief for the agent runtime         │  │
+│  └─────────────────────────┬─────────────────────────────┘  │
+│                            │                               │
+│  ┌─────────────────────────▼─────────────────────────────┐  │
+│  │                   Agent Runtime                        │  │
+│  │   Plan → Tool → Observe loop · Session memory         │  │
+│  └─────────────────────────┬─────────────────────────────┘  │
+│                            │                               │
+│  ┌─────────────────────────▼─────────────────────────────┐  │
+│  │                   MCP Skills                           │  │
+│  │   Operations runbooks · Contracts verification tools  │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │                   Observability                        │  │
+│  │   Langfuse: assembly · quality gates · RAG quality    │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+      <div class="grid-3" style="margin-top: 1.5rem">
+        {i.architecture.components.map((c) => (
+          <div class="feature-card">
+            <strong>{c.name}</strong>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-subtle)">{c.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- POC Stack -->
+    <section class="section--sm">
+      <div class="section-label">{i.poc.label}</div>
+      <h2>{i.poc.title}</h2>
+
+      <table style="margin-top: 1rem">
+        <thead>
+          <tr>
+            <th>{lang === 'fr' ? 'Composant' : 'Component'}</th>
+            <th>{lang === 'fr' ? 'Outil' : 'Tool'}</th>
+            <th>{lang === 'fr' ? 'Registre(s)' : 'Register(s)'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{lang === 'fr' ? 'Stockage documents' : 'Document storage'}</td>
+            <td><code>Git / filesystem</code></td>
+            <td>
+              <a href={`${base}/registers/knowledge`} style="color: var(--knowledge)">Knowledge</a> ·
+              <a href={`${base}/registers/intent`} style="color: var(--intent)">Intent</a> ·
+              <a href={`${base}/registers/contracts`} style="color: var(--contracts)">Contracts</a> ·
+              <a href={`${base}/registers/operations`} style="color: var(--operations)">Operations</a>
+            </td>
+          </tr>
+          <tr>
+            <td>{lang === 'fr' ? 'Index vectoriel' : 'Vector index'}</td>
+            <td><code>ChromaDB (local)</code></td>
+            <td><a href={`${base}/registers/knowledge`} style="color: var(--knowledge)">Knowledge</a></td>
+          </tr>
+          <tr>
+            <td>{lang === 'fr' ? 'Runtime agent' : 'Agent runtime'}</td>
+            <td><code>LangChain / LangGraph</code></td>
+            <td>{lang === 'fr' ? 'Tous' : 'All'}</td>
+          </tr>
+          <tr>
+            <td>Context Assembler</td>
+            <td><code>Python function</code></td>
+            <td>{lang === 'fr' ? 'Tous' : 'All'}</td>
+          </tr>
+          <tr>
+            <td>MCP Skills</td>
+            <td><code>mcp Python SDK</code></td>
+            <td>
+              <a href={`${base}/registers/contracts`} style="color: var(--contracts)">Contracts</a> ·
+              <a href={`${base}/registers/operations`} style="color: var(--operations)">Operations</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Observability</td>
+            <td><code>Langfuse (local)</code></td>
+            <td>{lang === 'fr' ? 'Tous' : 'All'}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr />
+
+    <!-- Production Stack -->
+    <section class="section--sm">
+      <div class="section-label">{i.production.label}</div>
+      <h2>{i.production.title}</h2>
+
+      <table style="margin-top: 1rem">
+        <thead>
+          <tr>
+            <th>{lang === 'fr' ? 'Composant' : 'Component'}</th>
+            <th>{lang === 'fr' ? 'Outil recommandé' : 'Recommended tool'}</th>
+            <th>{lang === 'fr' ? 'Notes' : 'Notes'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{lang === 'fr' ? 'Stockage documents' : 'Document storage'}</td>
+            <td><code>Git + CI/CD pipeline</code></td>
+            <td>{lang === 'fr' ? 'Validation et indexation à chaque PR' : 'Validation and indexing on each PR'}</td>
+          </tr>
+          <tr>
+            <td>{lang === 'fr' ? 'Index vectoriel' : 'Vector index'}</td>
+            <td><code>Weaviate / Pinecone</code></td>
+            <td>{lang === 'fr' ? 'Gestion du schéma et des métadonnées' : 'Schema and metadata management'}</td>
+          </tr>
+          <tr>
+            <td>{lang === 'fr' ? 'Runtime agent' : 'Agent runtime'}</td>
+            <td><code>LangGraph + Redis</code></td>
+            <td>{lang === 'fr' ? 'Mémoire de session distribuée' : 'Distributed session memory'}</td>
+          </tr>
+          <tr>
+            <td>Context Assembler</td>
+            <td><code>FastAPI service</code></td>
+            <td>{lang === 'fr' ? 'Stateless, scalable horizontalement' : 'Stateless, horizontally scalable'}</td>
+          </tr>
+          <tr>
+            <td>MCP Skills</td>
+            <td><code>MCP server cluster</code></td>
+            <td>{lang === 'fr' ? 'Registry organisationnel partagé' : 'Shared organizational registry'}</td>
+          </tr>
+          <tr>
+            <td>Observability</td>
+            <td><code>Langfuse Cloud</code></td>
+            <td>{lang === 'fr' ? '3 dimensions de traçabilité' : '3 traceability dimensions'}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr />
+
+    <!-- Context Assembler -->
+    <section class="section--sm" id="assembler">
+      <div class="section-label">{i.assembler.label}</div>
+      <h2>{i.assembler.title}</h2>
+      <p>{i.assembler.body}</p>
+
+      <div class="code-block" style="margin-top: 1.5rem">
+        <div class="code-block__header">
+          <span class="code-block__filename">context_assembler/assembler.py</span>
+          <span class="code-block__lang">Python</span>
+        </div>
+        <pre><code>from dataclasses import dataclass, field
+from typing import Any
+
+@dataclass
+class TaskBrief:
+    task_id: str
+    system_prompt: str          # Knowledge conventions + Intent directives + Contracts assertions
+    context_injection: str      # Current spec + applicable Decision Directives
+    rag_index: str              # Chroma collection name for RAG calls
+    mcp_skills: list[str]       # Callable MCP skill names for this task
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+class ContextAssembler:
+    def __init__(self, nexus_root: str, rag_client, langfuse):
+        self.nexus_root = nexus_root
+        self.rag = rag_client
+        self.lf = langfuse
+
+    def assemble(self, task_id: str, team: str, spec_path: str) -> TaskBrief:
+        with self.lf.trace(name="assemble", input=&#123;"task_id": task_id&#125;) as trace:
+            # 1. Traverse inheritance chain: org → intermediate → team
+            contracts = self._load_contracts(team, trace)
+            directives = self._load_directives(team, trace)
+            conventions = self._load_conventions(team, trace)
+
+            # 2. Build system prompt (always-active, low-volume, high-density)
+            system_prompt = "\n\n".join([conventions, directives, contracts])
+
+            # 3. Load spec for context injection
+            spec = open(f"&#123;self.nexus_root&#125;/&#123;spec_path&#125;").read()
+
+            # 4. Resolve available MCP skills for this team
+            skills = self._resolve_skills(team)
+
+            brief = TaskBrief(
+                task_id=task_id,
+                system_prompt=system_prompt,
+                context_injection=spec,
+                rag_index=f"knowledge-&#123;team&#125;",
+                mcp_skills=skills,
+            )
+            trace.update(output=&#123;"brief_size": len(system_prompt)&#125;)
+            return brief
+
+    def _load_contracts(self, team: str, trace) -> str:
+        # Traverse Org → Intermediate → Team, block unapproved exceptions
+        contracts = []
+        for level_contracts in self._traverse_inheritance("contracts", team):
+            for artifact in level_contracts:
+                if artifact.get("exception-to") and not artifact.get("exception-approved-by"):
+                    trace.event(name="blocked_contract", input=&#123;"path": artifact["path"]&#125;)
+                    continue  # block unapproved exception — never silently include
+                contracts.append(artifact["body"])
+        return "\n\n".join(contracts)</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Knowledge indexing -->
+    <section class="section--sm" id="knowledge">
+      <h2>{lang === 'fr' ? 'Indexation Knowledge (RAG)' : 'Knowledge indexing (RAG)'}</h2>
+      <p>
+        {lang === 'fr'
+          ? 'Les artefacts Knowledge sont découpés en chunks par concept atomique, puis embarqués dans un index vectoriel. Voir le '
+          : 'Knowledge artifacts are chunked by atomic concept, then embedded into a vector index. See the '}
+        <a href={`${base}/registers/knowledge`} style="color: var(--knowledge)">
+          {lang === 'fr' ? 'registre Knowledge →' : 'Knowledge register →'}
+        </a>
+      </p>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <div class="code-block__header">
+          <span class="code-block__filename">context_assembler/knowledge_indexer.py</span>
+          <span class="code-block__lang">Python</span>
+        </div>
+        <pre><code>from langchain.text_splitter import MarkdownHeaderTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import SentenceTransformerEmbeddings
+
+def index_knowledge(nexus_root: str, team: str) -> Chroma:
+    splitter = MarkdownHeaderTextSplitter(
+        headers_to_split_on=[("##", "section"), ("###", "subsection")]
+    )
+    docs = []
+    for level in ["org", f"intermediate/&#123;team_bu&#125;", f"teams/&#123;team&#125;"]:
+        for path in glob(f"&#123;nexus_root&#125;/&#123;level&#125;/knowledge/**/*.md"):
+            chunks = splitter.split_text(open(path).read())
+            for chunk in chunks:
+                chunk.metadata.update(&#123;"level": level, "source": path&#125;)
+            docs.extend(chunks)
+
+    return Chroma.from_documents(
+        docs,
+        SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2"),
+        persist_directory=f".chroma/&#123;team&#125;"
+    )</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- MCP Skills -->
+    <section class="section--sm" id="skills">
+      <h2>{lang === 'fr' ? 'Operations → MCP Skills' : 'Operations → MCP Skills'}</h2>
+      <p>
+        {lang === 'fr'
+          ? 'Les runbooks Operations sont encapsulés comme des outils appelables. Voir le '
+          : 'Operations runbooks are encapsulated as callable tools. See the '}
+        <a href={`${base}/registers/operations`} style="color: var(--operations)">
+          {lang === 'fr' ? 'registre Operations →' : 'Operations register →'}
+        </a>
+      </p>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <div class="code-block__header">
+          <span class="code-block__filename">skills/server.py</span>
+          <span class="code-block__lang">Python (MCP Server)</span>
+        </div>
+        <pre><code>from mcp.server import MCPServer
+from skills.catalog_indexation_lag import catalog_indexation_lag
+from skills.performance_test import performance_test
+from skills.mutation_score import mutation_score
+
+server = MCPServer(name="context-nexus-skills")
+
+# Operations runbooks — executable, not just readable
+server.register_tool(catalog_indexation_lag)
+
+# Contracts verification tools — return pass/fail + metrics
+server.register_tool(performance_test)
+server.register_tool(mutation_score)
+
+if __name__ == "__main__":
+    server.run(host="0.0.0.0", port=8765)</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Observability -->
+    <section class="section--sm">
+      <div class="section-label">{i.observability.label}</div>
+      <h2>{i.observability.title}</h2>
+
+      <div class="grid-3" style="margin-top: 1.5rem">
+        <div class="feature-card">
+          <strong>{i.observability.assembly.title}</strong>
+          <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-subtle)">{i.observability.assembly.desc}</p>
+        </div>
+        <div class="feature-card">
+          <strong>{i.observability.gates.title}</strong>
+          <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-subtle)">{i.observability.gates.desc}</p>
+        </div>
+        <div class="feature-card">
+          <strong>{i.observability.rag.title}</strong>
+          <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-subtle)">{i.observability.rag.desc}</p>
+        </div>
+      </div>
+
+      <div class="code-block" style="margin-top: 1.5rem">
+        <div class="code-block__header">
+          <span class="code-block__filename">context_assembler/observability.py</span>
+          <span class="code-block__lang">Python</span>
+        </div>
+        <pre><code>from langfuse import Langfuse
+
+lf = Langfuse()
+
+def traced_assembly(task_id: str, assembler: ContextAssembler, **kwargs) -> TaskBrief:
+    with lf.trace(name="context-assembly", user_id=kwargs.get("user")) as trace:
+        trace.span(name="inheritance-traversal")
+        brief = assembler.assemble(task_id=task_id, **kwargs)
+        trace.score(name="brief-size", value=len(brief.system_prompt))
+        return brief
+
+def traced_rag(query: str, collection: str, k: int = 5):
+    with lf.trace(name="rag-retrieval") as trace:
+        results = chroma.similarity_search_with_score(query, k=k, collection=collection)
+        avg_score = sum(score for _, score in results) / len(results)
+        trace.score(name="avg-similarity", value=avg_score)  # alert if declining
+        return [doc for doc, _ in results]</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Multi-agent -->
+    <section class="section--sm">
+      <div class="section-label">{i.multiagent.label}</div>
+      <h2>{i.multiagent.title}</h2>
+      <p>{i.multiagent.body}</p>
+    </section>
+
+    <hr />
+
+    <!-- Bootstrap -->
+    <section class="section--sm" id="bootstrap">
+      <div class="section-label">{i.bootstrap.label}</div>
+      <h2>{i.bootstrap.title}</h2>
+      <p>{i.bootstrap.subtitle}</p>
+
+      <h3 style="margin-top: 2rem">{i.bootstrap.fileTree}</h3>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__filename">{lang === 'fr' ? 'Structure de fichiers' : 'File structure'}</span>
+        </div>
+        <pre><code>nexus/
+├── org/
+│   ├── knowledge/
+│   │   └── conventions.md          # register: knowledge, level: org
+│   ├── intent/
+│   │   └── directives/
+│   │       └── security.md         # register: intent, level: org
+│   └── contracts/
+│       └── security.md             # register: contracts, level: org
+└── teams/
+    └── my-team/
+        ├── knowledge/
+        │   └── architecture.md     # register: knowledge, level: team
+        ├── intent/
+        │   ├── directives/
+        │   │   └── api-patterns.md
+        │   └── specs/
+        │       └── TICKET-42.md    # register: intent, consumption-mode: context-injection
+        ├── contracts/
+        │   └── quality-gates.md    # register: contracts, level: team
+        └── operations/
+            └── runbooks/
+                └── deploy.md       # register: operations, consumption-mode: skill</code></pre>
+      </div>
+
+      <h3 style="margin-top: 2rem">{i.bootstrap.install}</h3>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__filename">terminal</span>
+          <span class="code-block__lang">bash</span>
+        </div>
+        <pre><code>pip install langchain langchain-community chromadb langfuse mcp openai</code></pre>
+      </div>
+
+      <h3 style="margin-top: 2rem">{i.bootstrap.langfuse}</h3>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__filename">terminal</span>
+          <span class="code-block__lang">bash</span>
+        </div>
+        <pre><code>docker run -d -p 3000:3000 langfuse/langfuse:latest</code></pre>
+      </div>
+
+      <h3 style="margin-top: 2rem">{i.bootstrap.firstAgent}</h3>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__filename">run_agent.py</span>
+          <span class="code-block__lang">Python</span>
+        </div>
+        <pre><code>from context_assembler import ContextAssembler
+from langchain_openai import ChatOpenAI
+from langfuse import Langfuse
+
+assembler = ContextAssembler(
+    nexus_root="./nexus",
+    rag_client=chroma_client,
+    langfuse=Langfuse(),
+)
+
+# Assemble the task brief for ticket TICKET-42
+brief = assembler.assemble(
+    task_id="TICKET-42",
+    team="my-team",
+    spec_path="teams/my-team/intent/specs/TICKET-42.md",
+)
+
+# Run the agent with its assembled context
+llm = ChatOpenAI(model="gpt-4o")
+response = llm.invoke([
+    &#123;"role": "system", "content": brief.system_prompt&#125;,
+    &#123;"role": "user", "content": brief.context_injection&#125;,
+])
+print(response.content)</code></pre>
+      </div>
+
+      <p style="margin-top: 1.5rem; color: var(--text-subtle); font-style: italic; font-size: 0.875rem">{i.bootstrap.note}</p>
+    </section>
+
+    <hr />
+
+    <CrossRefStrip
+      lang={lang}
+      label={i.crossref.label}
+      registers={['knowledge', 'intent', 'contracts', 'operations']}
+    />
+
+  </div>
+</Layout>

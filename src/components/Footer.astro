@@ -1,0 +1,17 @@
+---
+import { useTranslations, type Lang } from '../i18n'
+interface Props { lang: Lang }
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="footer__copy">{t.footer.copy}</p>
+    <ul class="footer__links">
+      {t.footer.links.map(link => (
+        <li><a href={link.href}>{link.label}</a></li>
+      ))}
+    </ul>
+  </div>
+</footer>

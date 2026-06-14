@@ -1,0 +1,189 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import CrossRefStrip from '../../../components/CrossRefStrip.astro'
+import { useTranslations, type Lang } from '../../../i18n'
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'fr' } }]
+}
+
+const { lang } = Astro.params as { lang: Lang }
+const t = useTranslations(lang)
+const r = t.registers.operations
+const base = `/${lang}`
+---
+
+<Layout lang={lang} title={r.meta.title}>
+
+  <div class="page-header" style="border-top: 3px solid var(--operations)">
+    <div class="container container--content">
+      <div class="page-header__breadcrumb">
+        <a href={`/${lang}`}>{lang === 'fr' ? 'Accueil' : 'Home'}</a>
+        <span>›</span>
+        <a href={`${base}/concepts`}>Concepts</a>
+        <span>›</span>
+        <span style="color: var(--operations)">{r.header.label}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem">
+        <span class="chip chip--operations">{r.header.sublabel}</span>
+        <span class="mode-badge mode-badge--skill">Skills / MCP</span>
+        <span class="mode-badge mode-badge--rag">RAG</span>
+      </div>
+      <h1 class="page-header__title" style="color: var(--operations)">{r.header.label}</h1>
+      <p class="page-header__desc">{r.header.desc}</p>
+    </div>
+  </div>
+
+  <div class="container container--content">
+
+    <!-- What it contains -->
+    <section class="section--sm">
+      <h2>{r.what.title}</h2>
+      <p set:html={r.what.body} />
+    </section>
+
+    <hr />
+
+    <!-- Human vs AI -->
+    <section class="section--sm">
+      <h2>{lang === 'fr' ? 'Humains vs Agents IA' : 'Humans vs AI Agents'}</h2>
+      <div class="asymmetry">
+        <div class="asymmetry__cell asymmetry__cell--human">
+          <div class="asymmetry__actor">{r.asymmetry.humanActor}</div>
+          <p class="asymmetry__text">{r.asymmetry.humanText}</p>
+        </div>
+        <div class="asymmetry__cell asymmetry__cell--ai">
+          <div class="asymmetry__actor">{r.asymmetry.aiActor}</div>
+          <p class="asymmetry__text">{r.asymmetry.aiText}</p>
+        </div>
+      </div>
+      <p style="color: var(--text-subtle); font-style: italic; font-size: 0.875rem">{r.asymmetry.label}</p>
+    </section>
+
+    <hr />
+
+    <!-- Consumption modes -->
+    <section class="section--sm">
+      <h2>{r.consumption.title}</h2>
+      <div class="grid-2" style="margin-top: 1rem">
+        <div class="feature-card" style="border-top: 2px solid var(--knowledge)">
+          <span class="mode-badge mode-badge--rag">RAG</span>
+          <p style="margin-top: 0.75rem; font-size: 0.9rem" set:html={r.consumption.rag} />
+        </div>
+        <div class="feature-card" style="border-top: 2px solid var(--operations)">
+          <span class="mode-badge mode-badge--skill">Skills / MCP</span>
+          <p style="margin-top: 0.75rem; font-size: 0.9rem" set:html={r.consumption.skills} />
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Runbooks as MCP Skills -->
+    <section class="section--sm">
+      <h2>{r.mcp.title}</h2>
+      <p>{r.mcp.body}</p>
+
+      <div class="code-block" style="margin-top: 1.5rem">
+        <div class="code-block__header">
+          <span class="code-block__filename">skills/catalog_indexation_lag.py</span>
+          <span class="code-block__lang">Python (MCP)</span>
+        </div>
+        <pre><code>from mcp import tool
+from dataclasses import dataclass
+
+@dataclass
+class RunbookResult:
+    status: str          # "resolved" | "escalate"
+    lag_before: int
+    lag_after: int
+    actions_taken: list[str]
+    duration_seconds: int
+
+@tool
+def catalog_indexation_lag(
+    partition: str,
+    consumer_group: str = "catalog-indexer",
+) -> RunbookResult:
+    """
+    Runbook: Kafka consumer lag on catalogue indexation partition.
+    Diagnoses, scales consumer group, waits for lag resorption.
+    """
+    lag_before = get_consumer_lag(partition, consumer_group)
+    actions = [f"Detected lag: &#123;lag_before&#125; messages"]
+
+    if lag_before > 5000:
+        scale_consumer_group(consumer_group, replicas=6)
+        actions.append("Scaled consumer group to 6 instances")
+        lag_after = wait_for_resorption(partition, consumer_group, timeout=600)
+        actions.append(f"Lag resolved: &#123;lag_after&#125; messages remaining")
+        return RunbookResult(
+            status="resolved" if lag_after < 100 else "escalate",
+            lag_before=lag_before,
+            lag_after=lag_after,
+            actions_taken=actions,
+            duration_seconds=elapsed(),
+        )
+    return RunbookResult(
+        status="resolved", lag_before=lag_before, lag_after=lag_before,
+        actions_taken=["Lag within threshold — no action taken"], duration_seconds=0,
+    )</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Runbook artifact structure -->
+    <section class="section--sm">
+      <h2>{lang === 'fr' ? 'Structure d\'un runbook' : 'Runbook artifact structure'}</h2>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__filename">operations/runbooks/catalog-indexation-lag.md</span>
+          <span class="code-block__lang">YAML + Markdown</span>
+        </div>
+        <pre><code>---
+register: operations
+level: team
+owner: platform-engineer
+status: active
+consumption-mode: skill
+mcp-skill: catalog-indexation-lag
+last-validated: 2026-06-03
+---
+
+# Runbook — Catalogue Indexation Lag
+
+## Trigger
+Datadog alert: `kafka.consumer.lag > 5000` on partition `catalog-updates`.
+
+## Known causes
+- High-volume operator burst (> 2000 listings updated simultaneously)
+- Elasticsearch backpressure during bulk flush window
+- Consumer group crash / pod eviction
+
+## Resolution
+Execute MCP skill `catalog_indexation_lag` with affected partition.
+Expected resolution time: < 10 minutes for lags under 50,000 messages.
+
+## Escalation
+If lag persists after 10 min or exceeds 100,000 messages → PagerDuty: platform-oncall.
+
+## Post-incident
+Update this runbook with observed cause. Add Decision Context to Knowledge if pattern is new.</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <CrossRefStrip
+      lang={lang}
+      label={r.crossref.label}
+      registers={['knowledge', 'contracts']}
+      extra={[
+        { label: lang === 'fr' ? 'Implémentation → MCP Skills' : 'Implementation → MCP Skills', href: `${base}/implementation#skills` },
+        { label: lang === 'fr' ? 'Exemple → Épisode 3' : 'Example → Episode 3', href: `${base}/example#episode-3` },
+      ]}
+    />
+
+  </div>
+</Layout>

@@ -1,0 +1,27 @@
+---
+type Register = 'knowledge' | 'intent' | 'contracts' | 'operations'
+
+interface Props {
+  register: Register
+  label: string
+  sublabel: string
+  desc: string
+  href: string
+}
+
+const { register, label, sublabel, desc, href } = Astro.props
+
+const icons: Record<Register, string> = {
+  knowledge:  '🧠',
+  intent:     '🎯',
+  contracts:  '📋',
+  operations: '⚙️',
+}
+---
+
+<a href={href} class={`register-card register-card--${register}`}>
+  <div class="register-card__icon">{icons[register]}</div>
+  <div class="register-card__label">{label}</div>
+  <div class="register-card__title">{sublabel}</div>
+  <p class="register-card__desc">{desc}</p>
+</a>

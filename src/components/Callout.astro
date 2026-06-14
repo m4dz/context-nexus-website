@@ -1,0 +1,15 @@
+---
+type Variant = 'default' | 'knowledge' | 'intent' | 'contracts' | 'operations' | 'warning' | 'info'
+
+interface Props {
+  variant?: Variant
+  label?: string
+}
+
+const { variant = 'default', label } = Astro.props
+---
+
+<aside class={`callout callout--${variant}`}>
+  {label && <strong>{label}</strong>}
+  <slot />
+</aside>

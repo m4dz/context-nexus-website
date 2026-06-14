@@ -1,0 +1,215 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import Callout from '../../../components/Callout.astro'
+import CrossRefStrip from '../../../components/CrossRefStrip.astro'
+import { useTranslations, type Lang } from '../../../i18n'
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'fr' } }]
+}
+
+const { lang } = Astro.params as { lang: Lang }
+const t = useTranslations(lang)
+const r = t.registers.contracts
+const base = `/${lang}`
+---
+
+<Layout lang={lang} title={r.meta.title}>
+
+  <div class="page-header" style="border-top: 3px solid var(--contracts)">
+    <div class="container container--content">
+      <div class="page-header__breadcrumb">
+        <a href={`/${lang}`}>{lang === 'fr' ? 'Accueil' : 'Home'}</a>
+        <span>›</span>
+        <a href={`${base}/concepts`}>Concepts</a>
+        <span>›</span>
+        <span style="color: var(--contracts)">{r.header.label}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem">
+        <span class="chip chip--contracts">{r.header.sublabel}</span>
+        <span class="mode-badge mode-badge--system">System Prompt</span>
+        <span class="mode-badge mode-badge--skill">Skills / MCP</span>
+      </div>
+      <h1 class="page-header__title" style="color: var(--contracts)">{r.header.label}</h1>
+      <p class="page-header__desc">{r.header.desc}</p>
+    </div>
+  </div>
+
+  <div class="container container--content">
+
+    <!-- What it contains -->
+    <section class="section--sm">
+      <h2>{r.what.title}</h2>
+      <p set:html={r.what.body} />
+
+      <div class="grid-2" style="margin-top: 1.5rem">
+        <div class="feature-card">
+          <div class="feature-card__label">{lang === 'fr' ? 'Ingénierie' : 'Engineering'}</div>
+          <p style="font-size: 0.875rem; color: var(--text-subtle)" set:html={r.what.domains.engineering} />
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__label">{lang === 'fr' ? 'Produit' : 'Product'}</div>
+          <p style="font-size: 0.875rem; color: var(--text-subtle)" set:html={r.what.domains.product} />
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__label">UX</div>
+          <p style="font-size: 0.875rem; color: var(--text-subtle)" set:html={r.what.domains.ux} />
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__label">Data</div>
+          <p style="font-size: 0.875rem; color: var(--text-subtle)" set:html={r.what.domains.data} />
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Invariant -->
+    <section class="section--sm">
+      <h2>{r.invariant.title}</h2>
+      <Callout variant="warning">
+        <p set:html={r.invariant.body} />
+      </Callout>
+    </section>
+
+    <hr />
+
+    <!-- Human vs AI -->
+    <section class="section--sm">
+      <h2>{lang === 'fr' ? 'Humains vs Agents IA' : 'Humans vs AI Agents'}</h2>
+      <div class="asymmetry">
+        <div class="asymmetry__cell asymmetry__cell--human">
+          <div class="asymmetry__actor">{r.asymmetry.humanActor}</div>
+          <p class="asymmetry__text">{r.asymmetry.humanText}</p>
+        </div>
+        <div class="asymmetry__cell asymmetry__cell--ai">
+          <div class="asymmetry__actor">{r.asymmetry.aiActor}</div>
+          <p class="asymmetry__text">{r.asymmetry.aiText}</p>
+        </div>
+      </div>
+      <p style="color: var(--text-subtle); font-style: italic; font-size: 0.875rem">{r.asymmetry.label}</p>
+    </section>
+
+    <hr />
+
+    <!-- Consumption modes -->
+    <section class="section--sm">
+      <h2>{r.consumption.title}</h2>
+      <div class="grid-2" style="margin-top: 1rem">
+        <div class="feature-card" style="border-top: 2px solid var(--accent)">
+          <span class="mode-badge mode-badge--system">System Prompt</span>
+          <p style="margin-top: 0.75rem; font-size: 0.9rem" set:html={r.consumption.systemPrompt} />
+        </div>
+        <div class="feature-card" style="border-top: 2px solid var(--operations)">
+          <span class="mode-badge mode-badge--skill">Skills / MCP</span>
+          <p style="margin-top: 0.75rem; font-size: 0.9rem" set:html={r.consumption.skills} />
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Extension vs Exception vs Override -->
+    <section class="section--sm">
+      <h2>{r.exception.title}</h2>
+      <p>{r.exception.body}</p>
+
+      <div class="grid-3" style="margin-top: 1.5rem">
+        <div class="feature-card" style="border-left: 3px solid var(--intent)">
+          <p style="font-size: 0.9rem" set:html={r.exception.extension} />
+        </div>
+        <div class="feature-card" style="border-left: 3px solid var(--contracts)">
+          <p style="font-size: 0.9rem" set:html={r.exception.exception} />
+        </div>
+        <div class="feature-card" style="border-left: 3px solid var(--operations)">
+          <p style="font-size: 0.9rem" set:html={r.exception.override} />
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Artifact structure -->
+    <section class="section--sm">
+      <h2>{lang === 'fr' ? 'Structure d\'un artefact Contracts' : 'Contracts artifact structure'}</h2>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__filename">contracts/engineering/search-indexation-sla.md</span>
+          <span class="code-block__lang">YAML + Markdown</span>
+        </div>
+        <pre><code>---
+register: contracts
+level: team
+owner: tech-lead
+status: active
+consumption-mode: system-prompt
+last-validated: 2026-06-03
+exception-to: null
+exception-approved-by: null
+---
+
+# Contract — Search Indexation SLA
+
+## Performance
+- P95 results page (standard query): ≤ 200ms
+- P95 bulk writer (Elasticsearch flush): ≤ 80ms
+- Kafka consumer lag: alert threshold 5,000 messages
+
+## Quality gate
+- Mutation score ≥ 80% on indexation pipeline
+- No synchronous catalogue write to Elasticsearch (see Intent/directives/event-driven)
+
+## Verification tools
+- performance-test.mcp: run load test, return P95 metrics
+- mutation-score.mcp: run mutation testing, return score</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Exception artifact -->
+    <section class="section--sm">
+      <h2>{lang === 'fr' ? 'Artefact avec exception déclarée' : 'Artifact with declared exception'}</h2>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__filename">contracts/engineering/search-boosting-exception.md</span>
+          <span class="code-block__lang">YAML + Markdown</span>
+        </div>
+        <pre><code>---
+register: contracts
+level: team
+owner: tech-lead
+status: active
+exception-to: org/contracts/performance.md
+exception-approved-by: bu-digital-quality-lead
+exception-approved-date: 2026-05-28
+---
+
+# Contract — Search Boosting Exception
+
+## Scope
+Multi-criteria boosting queries only (relevance score computation > 3 factors).
+
+## Exception
+P95 threshold for boosted queries: ≤ 350ms (vs 200ms org standard).
+
+## Justification
+Relevance precision > 0.75 drives 3.4x higher conversion.
+Accepted trade-off: latency for relevance on complex queries.</code></pre>
+      </div>
+    </section>
+
+    <hr />
+
+    <CrossRefStrip
+      lang={lang}
+      label={r.crossref.label}
+      registers={['intent', 'operations']}
+      extra={[
+        { label: lang === 'fr' ? 'Exemple → Épisode 2' : 'Example → Episode 2', href: `${base}/example#episode-2` },
+        { label: lang === 'fr' ? 'Exemple → Épisode 4' : 'Example → Episode 4', href: `${base}/example#episode-4` },
+      ]}
+    />
+
+  </div>
+</Layout>

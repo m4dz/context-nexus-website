@@ -1,0 +1,40 @@
+---
+import RegisterChip from './RegisterChip.astro'
+import { type Lang } from '../i18n'
+
+type Register = 'knowledge' | 'intent' | 'contracts' | 'operations'
+
+interface Props {
+  lang: Lang
+  label: string
+  registers: Register[]
+  extra?: Array<{ label: string; href: string }>
+}
+
+const { lang, label, registers, extra = [] } = Astro.props
+
+const base = `/${lang}/registers`
+
+const registerLabels: Record<Register, string> = {
+  knowledge:  'Knowledge',
+  intent:     'Intent',
+  contracts:  'Contracts',
+  operations: 'Operations',
+}
+---
+
+<div class="crossref">
+  <span class="crossref__label">{label}</span>
+  <div class="crossref__links">
+    {registers.map(r => (
+      <RegisterChip
+        register={r}
+        label={registerLabels[r]}
+        href={`${base}/${r}`}
+      />
+    ))}
+    {extra.map(e => (
+      <a href={e.href} class="chip chip--knowledge" style="background:var(--bg-elevated);color:var(--text-muted);border-color:var(--border)">{e.label}</a>
+    ))}
+  </div>
+</div>
