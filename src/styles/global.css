@@ -1032,6 +1032,15 @@ hr {
   justify-content: space-between;
 }
 
+.nav__drawer-footer .nav__lang {
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .nav__links { display: none; }
