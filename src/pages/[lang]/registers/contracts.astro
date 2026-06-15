@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro'
 import Callout from '../../../components/Callout.astro'
 import CrossRefStrip from '../../../components/CrossRefStrip.astro'
+import CodeBlock from '../../../components/CodeBlock.astro'
 import { useTranslations, type Lang } from '../../../i18n'
 
 export function getStaticPaths() {
@@ -12,6 +13,56 @@ const { lang } = Astro.params as { lang: Lang }
 const t = useTranslations(lang)
 const r = t.registers.contracts
 const base = `/${lang}`
+
+const codeContractArtifact = `\
+---
+register: contracts
+level: team
+owner: tech-lead
+status: active
+consumption-mode: system-prompt
+last-validated: 2026-06-03
+exception-to: null
+exception-approved-by: null
+---
+
+# Contract — Search Indexation SLA
+
+## Performance
+- P95 results page (standard query): ≤ 200ms
+- P95 bulk writer (Elasticsearch flush): ≤ 80ms
+- Kafka consumer lag: alert threshold 5,000 messages
+
+## Quality gate
+- Mutation score ≥ 80% on indexation pipeline
+- No synchronous catalogue write to Elasticsearch (see Intent/directives/event-driven)
+
+## Verification tools
+- performance-test.mcp: run load test, return P95 metrics
+- mutation-score.mcp: run mutation testing, return score`
+
+const codeContractException = `\
+---
+register: contracts
+level: team
+owner: tech-lead
+status: active
+exception-to: org/contracts/performance.md
+exception-approved-by: bu-digital-quality-lead
+exception-approved-date: 2026-05-28
+---
+
+# Contract — Search Boosting Exception
+
+## Scope
+Multi-criteria boosting queries only (relevance score computation > 3 factors).
+
+## Exception
+P95 threshold for boosted queries: ≤ 350ms (vs 200ms org standard).
+
+## Justification
+Relevance precision > 0.75 drives 3.4x higher conversion.
+Accepted trade-off: latency for relevance on complex queries.`
 ---
 
 <Layout lang={lang} title={r.meta.title}>
@@ -132,37 +183,7 @@ const base = `/${lang}`
     <!-- Artifact structure -->
     <section class="section--sm">
       <h2>{lang === 'fr' ? 'Structure d\'un artefact Contracts' : 'Contracts artifact structure'}</h2>
-      <div class="code-block">
-        <div class="code-block__header">
-          <span class="code-block__filename">contracts/engineering/search-indexation-sla.md</span>
-          <span class="code-block__lang">YAML + Markdown</span>
-        </div>
-        <pre><code>---
-register: contracts
-level: team
-owner: tech-lead
-status: active
-consumption-mode: system-prompt
-last-validated: 2026-06-03
-exception-to: null
-exception-approved-by: null
----
-
-# Contract — Search Indexation SLA
-
-## Performance
-- P95 results page (standard query): ≤ 200ms
-- P95 bulk writer (Elasticsearch flush): ≤ 80ms
-- Kafka consumer lag: alert threshold 5,000 messages
-
-## Quality gate
-- Mutation score ≥ 80% on indexation pipeline
-- No synchronous catalogue write to Elasticsearch (see Intent/directives/event-driven)
-
-## Verification tools
-- performance-test.mcp: run load test, return P95 metrics
-- mutation-score.mcp: run mutation testing, return score</code></pre>
-      </div>
+      <CodeBlock code={codeContractArtifact} lang="markdown" filename="contracts/engineering/search-indexation-sla.md" label="YAML + Markdown" />
     </section>
 
     <hr />
@@ -170,33 +191,7 @@ exception-approved-by: null
     <!-- Exception artifact -->
     <section class="section--sm">
       <h2>{lang === 'fr' ? 'Artefact avec exception déclarée' : 'Artifact with declared exception'}</h2>
-      <div class="code-block">
-        <div class="code-block__header">
-          <span class="code-block__filename">contracts/engineering/search-boosting-exception.md</span>
-          <span class="code-block__lang">YAML + Markdown</span>
-        </div>
-        <pre><code>---
-register: contracts
-level: team
-owner: tech-lead
-status: active
-exception-to: org/contracts/performance.md
-exception-approved-by: bu-digital-quality-lead
-exception-approved-date: 2026-05-28
----
-
-# Contract — Search Boosting Exception
-
-## Scope
-Multi-criteria boosting queries only (relevance score computation > 3 factors).
-
-## Exception
-P95 threshold for boosted queries: ≤ 350ms (vs 200ms org standard).
-
-## Justification
-Relevance precision > 0.75 drives 3.4x higher conversion.
-Accepted trade-off: latency for relevance on complex queries.</code></pre>
-      </div>
+      <CodeBlock code={codeContractException} lang="markdown" filename="contracts/engineering/search-boosting-exception.md" label="YAML + Markdown" />
     </section>
 
     <hr />

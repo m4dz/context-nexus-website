@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro'
 import Callout from '../../../components/Callout.astro'
 import CrossRefStrip from '../../../components/CrossRefStrip.astro'
+import CodeBlock from '../../../components/CodeBlock.astro'
 import { useTranslations, type Lang } from '../../../i18n'
 
 export function getStaticPaths() {
@@ -12,6 +13,58 @@ const { lang } = Astro.params as { lang: Lang }
 const t = useTranslations(lang)
 const r = t.registers.knowledge
 const base = `/${lang}`
+
+const codeArtifact = `\
+---
+register: knowledge
+level: team
+owner: tech-lead
+status: active
+consumption-mode: rag
+last-validated: 2026-06-03
+---
+
+# Decision Context — Event-driven indexation
+
+## Situation
+P95 latency spikes to 1.8s during mass catalogue updates.
+Cause: synchronous writes to Elasticsearch from catalog-updater service.
+
+## Options evaluated
+
+### CQRS with separate read model
+Rejected: high maintenance cost for a 7-person team.
+Reference incident: similar pattern on project X (2024), two P1s.
+
+## Decision taken
+Async event-driven indexation: catalogue updates produce Kafka events
+consumed by a dedicated indexer → Elasticsearch.
+
+## Observed consequences
+(to be completed after 30 days in production)`
+
+const codeIndexer = `\
+from langchain.text_splitter import MarkdownHeaderTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import SentenceTransformerEmbeddings
+
+def index_knowledge(nexus_root: str, team: str) -> Chroma:
+    splitter = MarkdownHeaderTextSplitter(
+        headers_to_split_on=[("##", "section"), ("###", "subsection")]
+    )
+    docs = []
+    for level in ["org", f"intermediate/{team_bu}", f"teams/{team}"]:
+        for path in glob(f"{nexus_root}/{level}/knowledge/**/*.md"):
+            chunks = splitter.split_text(open(path).read())
+            for chunk in chunks:
+                chunk.metadata.update({"level": level, "source": path})
+            docs.extend(chunks)
+
+    return Chroma.from_documents(
+        docs,
+        SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2"),
+        persist_directory=f".chroma/{team}"
+    )`
 ---
 
 <Layout lang={lang} title={r.meta.title}>
@@ -89,39 +142,7 @@ const base = `/${lang}`
       <h2>{r.artifact.title}</h2>
       <p>{r.artifact.body}</p>
 
-      <div class="code-block">
-        <div class="code-block__header">
-          <span class="code-block__filename">knowledge/decision-contexts/event-driven-indexation.md</span>
-          <span class="code-block__lang">YAML + Markdown</span>
-        </div>
-        <pre><code>---
-register: knowledge
-level: team
-owner: tech-lead
-status: active
-consumption-mode: rag
-last-validated: 2026-06-03
----
-
-# Decision Context — Event-driven indexation
-
-## Situation
-P95 latency spikes to 1.8s during mass catalogue updates.
-Cause: synchronous writes to Elasticsearch from catalog-updater service.
-
-## Options evaluated
-
-### CQRS with separate read model
-Rejected: high maintenance cost for a 7-person team.
-Reference incident: similar pattern on project X (2024), two P1s.
-
-## Decision taken
-Async event-driven indexation: catalogue updates produce Kafka events
-consumed by a dedicated indexer → Elasticsearch.
-
-## Observed consequences
-(to be completed after 30 days in production)</code></pre>
-      </div>
+      <CodeBlock code={codeArtifact} lang="markdown" filename="knowledge/decision-contexts/event-driven-indexation.md" label="YAML + Markdown" />
     </section>
 
     <hr />
@@ -133,33 +154,7 @@ consumed by a dedicated indexer → Elasticsearch.
         ? 'Les artefacts Knowledge sont découpés en chunks par concept atomique, puis embarqués dans un index vectoriel.'
         : 'Knowledge artifacts are chunked by atomic concept, then embedded into a vector index.'}</p>
 
-      <div class="code-block">
-        <div class="code-block__header">
-          <span class="code-block__filename">context_assembler/knowledge_indexer.py</span>
-          <span class="code-block__lang">Python</span>
-        </div>
-        <pre><code>from langchain.text_splitter import MarkdownHeaderTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import SentenceTransformerEmbeddings
-
-def index_knowledge(nexus_root: str, team: str) -> Chroma:
-    splitter = MarkdownHeaderTextSplitter(
-        headers_to_split_on=[("##", "section"), ("###", "subsection")]
-    )
-    docs = []
-    for level in ["org", f"intermediate/&#123;team_bu&#125;", f"teams/&#123;team&#125;"]:
-        for path in glob(f"&#123;nexus_root&#125;/&#123;level&#125;/knowledge/**/*.md"):
-            chunks = splitter.split_text(open(path).read())
-            for chunk in chunks:
-                chunk.metadata.update(&#123;"level": level, "source": path&#125;)
-            docs.extend(chunks)
-
-    return Chroma.from_documents(
-        docs,
-        SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2"),
-        persist_directory=f".chroma/&#123;team&#125;"
-    )</code></pre>
-      </div>
+      <CodeBlock code={codeIndexer} lang="python" filename="context_assembler/knowledge_indexer.py" label="Python" />
     </section>
 
     <hr />

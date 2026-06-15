@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Redirect / to the appropriate language based on Accept-Language header.
+# French takes priority when the browser's top preference starts with "fr"
+# (covers fr, fr-FR, fr-CA, fr-CH, …). Falls back to English otherwise.
+
+RewriteCond %{REQUEST_URI} ^/$
+RewriteCond %{HTTP_ACCEPT_LANGUAGE} ^fr [NC]
+RewriteRule ^ /fr/ [L,R=302]
+
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^ /en/ [L,R=302]

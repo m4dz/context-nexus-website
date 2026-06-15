@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro'
 import RegisterCard from '../../components/RegisterCard.astro'
 import Callout from '../../components/Callout.astro'
 import Timeline from '../../components/Timeline.astro'
+import CodeBlock from '../../components/CodeBlock.astro'
 import { useTranslations, type Lang } from '../../i18n'
 
 export function getStaticPaths() {
@@ -14,6 +15,26 @@ const t = useTranslations(lang)
 const c = t.concepts
 const h = t.home
 const base = `/${lang}`
+
+const codeInheritanceTree = `\
+Nexus Org (root)
+  └── Nexus Intermediate  (BU / Tribe / Programme / Value Stream)
+        └── Nexus Team    (two pizza team)`
+
+const codeExceptionYaml = `\
+---
+register: contracts
+level: team
+exception-to: null              # pure extension — always allowed
+exception-approved-by: null
+---
+
+---
+register: contracts
+level: team
+exception-to: org/contracts/security.md    # declared exception
+exception-approved-by: security-guild      # validated by org owner
+---`
 ---
 
 <Layout lang={lang} title={c.meta.title}>
@@ -213,26 +234,12 @@ const base = `/${lang}`
       <h2>{c.inheritance.title}</h2>
       <div set:html={`<p>${c.inheritance.body.replace(/\n\n/g, '</p><p>')}</p>`} />
 
-      <pre style="margin-top: 1.5rem"><code>Nexus Org (root)
-  └── Nexus Intermediate  (BU / Tribe / Programme / Value Stream)
-        └── Nexus Team    (two pizza team)</code></pre>
+      <CodeBlock code={codeInheritanceTree} style="margin-top: 1.5rem" />
 
       <h3>{c.inheritance.enforcement.title}</h3>
       <div set:html={`<p>${c.inheritance.enforcement.body}</p>`} />
 
-      <pre><code>---
-register: contracts
-level: team
-exception-to: null              # pure extension — always allowed
-exception-approved-by: null
----
-
----
-register: contracts
-level: team
-exception-to: org/contracts/security.md    # declared exception
-exception-approved-by: security-guild      # validated by org owner
----</code></pre>
+      <CodeBlock code={codeExceptionYaml} lang="yaml" />
     </section>
 
     <hr />

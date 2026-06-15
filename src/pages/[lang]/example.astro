@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro'
 import RegisterChip from '../../components/RegisterChip.astro'
 import CrossRefStrip from '../../components/CrossRefStrip.astro'
 import Callout from '../../components/Callout.astro'
+import CodeBlock from '../../components/CodeBlock.astro'
 import { useTranslations, type Lang } from '../../i18n'
 
 export function getStaticPaths() {
@@ -13,6 +14,124 @@ const { lang } = Astro.params as { lang: Lang }
 const t = useTranslations(lang)
 const e = t.example
 const base = `/${lang}`
+
+const codeDecisionContext = `\
+---
+register: knowledge
+level: team
+owner: tech-lead
+status: active
+consumption-mode: rag
+---
+
+# Decision Context — Event-driven indexation
+
+## Situation
+P95 latency spikes to 1.8s during mass catalogue updates.
+Cause: synchronous writes to Elasticsearch.
+
+## Options evaluated
+### CQRS with separate read model
+Rejected: high maintenance cost for a 7-person team.
+Reference: two P1s on similar pattern (project X, 2024).
+
+## Decision taken
+Async event-driven indexation via Kafka.
+
+## Observed consequences
+(to be completed after 30 days in production)`
+
+const codeDecisionDirective = `\
+---
+register: intent
+level: team
+owner: tech-lead
+status: active
+consumption-mode: system-prompt
+---
+
+# Decision Directive — Event-driven indexation
+
+All hotel catalogue updates must transit through
+a Kafka event before any write to Elasticsearch.
+No synchronous catalogue write to Elasticsearch
+is allowed in this bounded context.
+
+Acceptance criteria: see Contracts/search-indexation-sla.md
+Decision context: Knowledge/decision-contexts/event-driven-indexation.md`
+
+const codeSpec89 = `\
+---
+register: intent
+consumption-mode: context-injection
+---
+
+# Spec SEARCH-89
+
+## Objective
+Reduce P95 latency of the results page to under 200ms.
+
+## Acceptance criteria
+- [ ] P95 measured on the indexation pipeline: ≤ 200ms
+- [ ] No synchronous Elasticsearch write (see Decision Directive /directives/event-driven)
+- [ ] Load test: 500 req/s for 5 minutes without degradation`
+
+const codeRunbookLog = `\
+[08:47:12] Alert received: kafka.consumer.lag > 5000 (partition: catalog-updates)
+[08:47:13] Searching Operations register: "kafka consumer lag catalogue indexation"
+[08:47:13] Matched: operations/runbooks/catalog-indexation-lag.md (similarity: 0.94)
+[08:47:14] Invoking MCP skill: catalog_indexation_lag(partition="catalog-updates")
+[08:47:15] Diagnosed: lag=12847 messages, last_write=4m32s ago
+[08:47:16] Action: scaling consumer group from 2 → 6 instances
+[08:47:45] Monitoring lag resorption...
+[08:55:22] Lag resolved: 43 messages remaining
+[08:55:23] Skill result: status=resolved, duration=487s
+[08:55:24] Notified: sophie@marketplace.sa, marcus@marketplace.sa
+[08:55:24] Incident duration: 23 minutes`
+
+const codeHypothesis = `\
+---
+register: intent
+level: team
+owner: product-manager
+status: active
+supersedes: intent/hypotheses/speed-first.md
+---
+
+# Product Hypothesis — Relevance as primary conversion lever
+
+## Previous hypothesis (superseded)
+Speed is the primary conversion lever for the results page.
+
+## Revised hypothesis
+Relevance precision > 0.75 is the primary conversion lever.
+Source: ML analysis 2026-05-20, 2 months of production data, n=48,000 sessions.
+Conversion lift: 3.4× for precision > 0.75 vs. baseline.
+
+## Roadmap implication
+Sprint S+1: prioritize ranking algorithm improvement.
+Accept P95 > 200ms for multi-criteria boosting queries.`
+
+const codeException = `\
+---
+register: contracts
+level: team
+exception-to: org/contracts/performance.md
+exception-approved-by: null   # ← Context Assembler blocks until validated
+---
+
+# → Marcus submits to BU Digital Products quality lead
+# → BU lead validates (3 days later)
+
+---
+register: contracts
+level: team
+exception-to: org/contracts/performance.md
+exception-approved-by: bu-digital-quality-lead   # ← now included
+exception-approved-date: 2026-05-28
+---
+
+P95 for multi-criteria boosting queries: ≤ 350ms (exception to 200ms org standard)`
 ---
 
 <Layout lang={lang} title={e.meta.title}>
@@ -69,63 +188,14 @@ const base = `/${lang}`
           <h3 style="color: var(--knowledge)">{e.episodes.ep1.knowledge.title}</h3>
           <p style="font-size: 0.9rem">{e.episodes.ep1.knowledge.body}</p>
 
-          <div class="code-block" style="margin-top: 1rem">
-            <div class="code-block__header">
-              <span class="code-block__filename">knowledge/decision-contexts/event-driven-indexation.md</span>
-            </div>
-            <pre><code>---
-register: knowledge
-level: team
-owner: tech-lead
-status: active
-consumption-mode: rag
----
-
-# Decision Context — Event-driven indexation
-
-## Situation
-P95 latency spikes to 1.8s during mass catalogue updates.
-Cause: synchronous writes to Elasticsearch.
-
-## Options evaluated
-### CQRS with separate read model
-Rejected: high maintenance cost for a 7-person team.
-Reference: two P1s on similar pattern (project X, 2024).
-
-## Decision taken
-Async event-driven indexation via Kafka.
-
-## Observed consequences
-(to be completed after 30 days in production)</code></pre>
-          </div>
+          <CodeBlock code={codeDecisionContext} lang="markdown" filename="knowledge/decision-contexts/event-driven-indexation.md" style="margin-top: 1rem" />
         </div>
 
         <div>
           <h3 style="color: var(--intent)">{e.episodes.ep1.intent.title}</h3>
           <p style="font-size: 0.9rem">{e.episodes.ep1.intent.body}</p>
 
-          <div class="code-block" style="margin-top: 1rem">
-            <div class="code-block__header">
-              <span class="code-block__filename">intent/directives/event-driven-indexation.md</span>
-            </div>
-            <pre><code>---
-register: intent
-level: team
-owner: tech-lead
-status: active
-consumption-mode: system-prompt
----
-
-# Decision Directive — Event-driven indexation
-
-All hotel catalogue updates must transit through
-a Kafka event before any write to Elasticsearch.
-No synchronous catalogue write to Elasticsearch
-is allowed in this bounded context.
-
-Acceptance criteria: see Contracts/search-indexation-sla.md
-Decision context: Knowledge/decision-contexts/event-driven-indexation.md</code></pre>
-          </div>
+          <CodeBlock code={codeDecisionDirective} lang="markdown" filename="intent/directives/event-driven-indexation.md" style="margin-top: 1rem" />
         </div>
       </div>
 
@@ -161,26 +231,7 @@ Decision context: Knowledge/decision-contexts/event-driven-indexation.md</code><
       <h3 style="margin-top: 1.5rem">{e.episodes.ep2.assembler.title}</h3>
       <p>{e.episodes.ep2.assembler.body}</p>
 
-      <div class="code-block" style="margin-top: 1rem">
-        <div class="code-block__header">
-          <span class="code-block__filename">intent/specs/SEARCH-89.md</span>
-          <span class="code-block__lang">Context Injection</span>
-        </div>
-        <pre><code>---
-register: intent
-consumption-mode: context-injection
----
-
-# Spec SEARCH-89
-
-## Objective
-Reduce P95 latency of the results page to under 200ms.
-
-## Acceptance criteria
-- [ ] P95 measured on the indexation pipeline: ≤ 200ms
-- [ ] No synchronous Elasticsearch write (see Decision Directive /directives/event-driven)
-- [ ] Load test: 500 req/s for 5 minutes without degradation</code></pre>
-      </div>
+      <CodeBlock code={codeSpec89} lang="markdown" filename="intent/specs/SEARCH-89.md" label="Context Injection" style="margin-top: 1rem" />
 
       <h3 style="margin-top: 1.5rem; color: var(--contracts)">{e.episodes.ep2.gate.title}</h3>
       <p>{e.episodes.ep2.gate.body}</p>
@@ -220,22 +271,7 @@ Reduce P95 latency of the results page to under 200ms.
       <h3 style="margin-top: 1.5rem; color: var(--operations)">{e.episodes.ep3.runbook.title}</h3>
       <p>{e.episodes.ep3.runbook.body}</p>
 
-      <div class="code-block" style="margin-top: 1rem">
-        <div class="code-block__header">
-          <span class="code-block__filename">{lang === 'fr' ? 'Exécution du runbook (agent log)' : 'Runbook execution (agent log)'}</span>
-        </div>
-        <pre><code>[08:47:12] Alert received: kafka.consumer.lag > 5000 (partition: catalog-updates)
-[08:47:13] Searching Operations register: "kafka consumer lag catalogue indexation"
-[08:47:13] Matched: operations/runbooks/catalog-indexation-lag.md (similarity: 0.94)
-[08:47:14] Invoking MCP skill: catalog_indexation_lag(partition="catalog-updates")
-[08:47:15] Diagnosed: lag=12847 messages, last_write=4m32s ago
-[08:47:16] Action: scaling consumer group from 2 → 6 instances
-[08:47:45] Monitoring lag resorption...
-[08:55:22] Lag resolved: 43 messages remaining
-[08:55:23] Skill result: status=resolved, duration=487s
-[08:55:24] Notified: sophie@marketplace.sa, marcus@marketplace.sa
-[08:55:24] Incident duration: 23 minutes</code></pre>
-      </div>
+      <CodeBlock code={codeRunbookLog} filename={lang === 'fr' ? 'Exécution du runbook (agent log)' : 'Runbook execution (agent log)'} style="margin-top: 1rem" />
 
       <h3 style="margin-top: 1.5rem">{e.episodes.ep3.postmortem.title}</h3>
       <p>{e.episodes.ep3.postmortem.body}</p>
@@ -272,33 +308,7 @@ Reduce P95 latency of the results page to under 200ms.
       <h3 style="margin-top: 1.5rem; color: var(--intent)">{e.episodes.ep4.intent.title}</h3>
       <p>{e.episodes.ep4.intent.body}</p>
 
-      <div class="code-block" style="margin-top: 1rem">
-        <div class="code-block__header">
-          <span class="code-block__filename">intent/hypotheses/relevance-vs-speed.md</span>
-          <span class="code-block__lang">Intent update</span>
-        </div>
-        <pre><code>---
-register: intent
-level: team
-owner: product-manager
-status: active
-supersedes: intent/hypotheses/speed-first.md
----
-
-# Product Hypothesis — Relevance as primary conversion lever
-
-## Previous hypothesis (superseded)
-Speed is the primary conversion lever for the results page.
-
-## Revised hypothesis
-Relevance precision > 0.75 is the primary conversion lever.
-Source: ML analysis 2026-05-20, 2 months of production data, n=48,000 sessions.
-Conversion lift: 3.4× for precision > 0.75 vs. baseline.
-
-## Roadmap implication
-Sprint S+1: prioritize ranking algorithm improvement.
-Accept P95 > 200ms for multi-criteria boosting queries.</code></pre>
-      </div>
+      <CodeBlock code={codeHypothesis} lang="markdown" filename="intent/hypotheses/relevance-vs-speed.md" label="Intent update" style="margin-top: 1rem" />
 
       <h3 style="margin-top: 1.5rem; color: var(--contracts)">{e.episodes.ep4.tension.title}</h3>
       <p>{e.episodes.ep4.tension.body}</p>
@@ -306,31 +316,7 @@ Accept P95 > 200ms for multi-criteria boosting queries.</code></pre>
       <h3 style="margin-top: 1.5rem">{e.episodes.ep4.exception.title}</h3>
       <p>{e.episodes.ep4.exception.body}</p>
 
-      <div class="code-block" style="margin-top: 1rem">
-        <div class="code-block__header">
-          <span class="code-block__filename">contracts/engineering/search-boosting-exception.md</span>
-          <span class="code-block__lang">Exception workflow</span>
-        </div>
-        <pre><code>---
-register: contracts
-level: team
-exception-to: org/contracts/performance.md
-exception-approved-by: null   # ← Context Assembler blocks until validated
----
-
-# → Marcus submits to BU Digital Products quality lead
-# → BU lead validates (3 days later)
-
----
-register: contracts
-level: team
-exception-to: org/contracts/performance.md
-exception-approved-by: bu-digital-quality-lead   # ← now included
-exception-approved-date: 2026-05-28
----
-
-P95 for multi-criteria boosting queries: ≤ 350ms (exception to 200ms org standard)</code></pre>
-      </div>
+      <CodeBlock code={codeException} lang="yaml" filename="contracts/engineering/search-boosting-exception.md" label="Exception workflow" style="margin-top: 1rem" />
 
       <Callout variant="info">
         <p>{e.episodes.ep4.insight}</p>

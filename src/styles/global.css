@@ -52,6 +52,27 @@
   --radius-lg: 12px;
 }
 
+[data-theme="light"] {
+  --bg:            #F8F9FC;
+  --bg-surface:    #EDEEF5;
+  --bg-elevated:   #E3E5F0;
+  --bg-hover:      #DADBEA;
+
+  --border:        #C8CADE;
+  --border-strong: #A8ABCA;
+
+  --text:          #1A1C2E;
+  --text-muted:    #4A4E6C;
+  --text-subtle:   #8589A8;
+
+  --accent-glow:   rgba(129, 140, 248, 0.10);
+
+  --knowledge-bg:  #EBF5FF;
+  --intent-bg:     #ECFDF5;
+  --contracts-bg:  #FFFBEB;
+  --operations-bg: #FFF5F5;
+}
+
 /* ── Reset ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -216,7 +237,7 @@ hr {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(12, 13, 20, 0.85);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
@@ -280,6 +301,30 @@ hr {
   background: var(--accent-glow) !important;
   border-color: var(--accent) !important;
 }
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--bg-elevated);
+}
+
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+[data-theme="light"] .theme-toggle .icon-sun  { display: block; }
+[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 /* ── Hero ──────────────────────────────────────────────────── */
 .hero {
@@ -775,6 +820,12 @@ hr {
   margin: 0;
   border: none;
   border-radius: 0;
+}
+
+[data-theme="dark"] .astro-code,
+[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
 }
 
 /* ── Consumption mode badges ───────────────────────────────── */

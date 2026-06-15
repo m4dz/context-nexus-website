@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro'
 import CrossRefStrip from '../../../components/CrossRefStrip.astro'
+import CodeBlock from '../../../components/CodeBlock.astro'
 import { useTranslations, type Lang } from '../../../i18n'
 
 export function getStaticPaths() {
@@ -11,6 +12,78 @@ const { lang } = Astro.params as { lang: Lang }
 const t = useTranslations(lang)
 const r = t.registers.operations
 const base = `/${lang}`
+
+const codeMcpSkill = `\
+from mcp import tool
+from dataclasses import dataclass
+
+@dataclass
+class RunbookResult:
+    status: str          # "resolved" | "escalate"
+    lag_before: int
+    lag_after: int
+    actions_taken: list[str]
+    duration_seconds: int
+
+@tool
+def catalog_indexation_lag(
+    partition: str,
+    consumer_group: str = "catalog-indexer",
+) -> RunbookResult:
+    """
+    Runbook: Kafka consumer lag on catalogue indexation partition.
+    Diagnoses, scales consumer group, waits for lag resorption.
+    """
+    lag_before = get_consumer_lag(partition, consumer_group)
+    actions = [f"Detected lag: {lag_before} messages"]
+
+    if lag_before > 5000:
+        scale_consumer_group(consumer_group, replicas=6)
+        actions.append("Scaled consumer group to 6 instances")
+        lag_after = wait_for_resorption(partition, consumer_group, timeout=600)
+        actions.append(f"Lag resolved: {lag_after} messages remaining")
+        return RunbookResult(
+            status="resolved" if lag_after < 100 else "escalate",
+            lag_before=lag_before,
+            lag_after=lag_after,
+            actions_taken=actions,
+            duration_seconds=elapsed(),
+        )
+    return RunbookResult(
+        status="resolved", lag_before=lag_before, lag_after=lag_before,
+        actions_taken=["Lag within threshold — no action taken"], duration_seconds=0,
+    )`
+
+const codeRunbook = `\
+---
+register: operations
+level: team
+owner: platform-engineer
+status: active
+consumption-mode: skill
+mcp-skill: catalog-indexation-lag
+last-validated: 2026-06-03
+---
+
+# Runbook — Catalogue Indexation Lag
+
+## Trigger
+Datadog alert: \`kafka.consumer.lag > 5000\` on partition \`catalog-updates\`.
+
+## Known causes
+- High-volume operator burst (> 2000 listings updated simultaneously)
+- Elasticsearch backpressure during bulk flush window
+- Consumer group crash / pod eviction
+
+## Resolution
+Execute MCP skill \`catalog_indexation_lag\` with affected partition.
+Expected resolution time: < 10 minutes for lags under 50,000 messages.
+
+## Escalation
+If lag persists after 10 min or exceeds 100,000 messages → PagerDuty: platform-oncall.
+
+## Post-incident
+Update this runbook with observed cause. Add Decision Context to Knowledge if pattern is new.`
 ---
 
 <Layout lang={lang} title={r.meta.title}>
@@ -84,51 +157,7 @@ const base = `/${lang}`
       <h2>{r.mcp.title}</h2>
       <p>{r.mcp.body}</p>
 
-      <div class="code-block" style="margin-top: 1.5rem">
-        <div class="code-block__header">
-          <span class="code-block__filename">skills/catalog_indexation_lag.py</span>
-          <span class="code-block__lang">Python (MCP)</span>
-        </div>
-        <pre><code>from mcp import tool
-from dataclasses import dataclass
-
-@dataclass
-class RunbookResult:
-    status: str          # "resolved" | "escalate"
-    lag_before: int
-    lag_after: int
-    actions_taken: list[str]
-    duration_seconds: int
-
-@tool
-def catalog_indexation_lag(
-    partition: str,
-    consumer_group: str = "catalog-indexer",
-) -> RunbookResult:
-    """
-    Runbook: Kafka consumer lag on catalogue indexation partition.
-    Diagnoses, scales consumer group, waits for lag resorption.
-    """
-    lag_before = get_consumer_lag(partition, consumer_group)
-    actions = [f"Detected lag: &#123;lag_before&#125; messages"]
-
-    if lag_before > 5000:
-        scale_consumer_group(consumer_group, replicas=6)
-        actions.append("Scaled consumer group to 6 instances")
-        lag_after = wait_for_resorption(partition, consumer_group, timeout=600)
-        actions.append(f"Lag resolved: &#123;lag_after&#125; messages remaining")
-        return RunbookResult(
-            status="resolved" if lag_after < 100 else "escalate",
-            lag_before=lag_before,
-            lag_after=lag_after,
-            actions_taken=actions,
-            duration_seconds=elapsed(),
-        )
-    return RunbookResult(
-        status="resolved", lag_before=lag_before, lag_after=lag_before,
-        actions_taken=["Lag within threshold — no action taken"], duration_seconds=0,
-    )</code></pre>
-      </div>
+      <CodeBlock code={codeMcpSkill} lang="python" filename="skills/catalog_indexation_lag.py" label="Python (MCP)" style="margin-top: 1.5rem" />
     </section>
 
     <hr />
@@ -136,41 +165,7 @@ def catalog_indexation_lag(
     <!-- Runbook artifact structure -->
     <section class="section--sm">
       <h2>{lang === 'fr' ? 'Structure d\'un runbook' : 'Runbook artifact structure'}</h2>
-      <div class="code-block">
-        <div class="code-block__header">
-          <span class="code-block__filename">operations/runbooks/catalog-indexation-lag.md</span>
-          <span class="code-block__lang">YAML + Markdown</span>
-        </div>
-        <pre><code>---
-register: operations
-level: team
-owner: platform-engineer
-status: active
-consumption-mode: skill
-mcp-skill: catalog-indexation-lag
-last-validated: 2026-06-03
----
-
-# Runbook — Catalogue Indexation Lag
-
-## Trigger
-Datadog alert: `kafka.consumer.lag > 5000` on partition `catalog-updates`.
-
-## Known causes
-- High-volume operator burst (> 2000 listings updated simultaneously)
-- Elasticsearch backpressure during bulk flush window
-- Consumer group crash / pod eviction
-
-## Resolution
-Execute MCP skill `catalog_indexation_lag` with affected partition.
-Expected resolution time: < 10 minutes for lags under 50,000 messages.
-
-## Escalation
-If lag persists after 10 min or exceeds 100,000 messages → PagerDuty: platform-oncall.
-
-## Post-incident
-Update this runbook with observed cause. Add Decision Context to Knowledge if pattern is new.</code></pre>
-      </div>
+      <CodeBlock code={codeRunbook} lang="markdown" filename="operations/runbooks/catalog-indexation-lag.md" label="YAML + Markdown" />
     </section>
 
     <hr />
