@@ -79,4 +79,4 @@ All text content lives in `src/i18n/en.ts` and `src/i18n/fr.ts` — both files m
 
 ---
 
-A framework by [Zenika](https://zenika.com) · Not an official product.
+A framework imagined at [Zenika](https://zenika.com) · Not an official product.
