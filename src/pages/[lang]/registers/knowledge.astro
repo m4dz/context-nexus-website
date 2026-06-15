@@ -78,7 +78,7 @@ def index_knowledge(nexus_root: str, team: str) -> Chroma:
         <span>›</span>
         <span style="color: var(--knowledge)">{r.header.label}</span>
       </div>
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem">
+      <div class="badge-row">
         <span class="chip chip--knowledge">{r.header.sublabel}</span>
         <span class="mode-badge mode-badge--rag">RAG</span>
         <span class="mode-badge mode-badge--system">System Prompt</span>
