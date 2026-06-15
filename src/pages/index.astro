@@ -1,3 +1,20 @@
 ---
-return Astro.redirect('/en', 302)
+// Language detection is handled client-side; static output can't inspect headers.
+// The .htaccess handles it server-side on Apache when AllowOverride is set.
 ---
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Context Nexus</title>
+    <script is:inline>
+      var lang = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+      window.location.replace(lang.toLowerCase().startsWith('fr') ? '/fr/' : '/en/');
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/en/" />
+    </noscript>
+  </head>
+  <body></body>
+</html>
