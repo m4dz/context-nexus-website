@@ -2,7 +2,7 @@ export default {
   site: {
     title: 'Context Nexus',
     description:
-      'A living knowledge system co-built by humans and AI agents — the systemic core every team feeds with intention, and every AI enriches with observation.',
+      'A living knowledge system co-built by humans and AI agents: the systemic core every team feeds with intention, and every AI enriches with observation.',
   },
 
   nav: {
@@ -49,14 +49,14 @@ export default {
       title: 'Documentation was dead weight.',
       body: `Organizations sit on mountains of accumulated knowledge: past decisions, codified business rules, tomorrow's intentions. Mostly unstructured, inaccessible, and unused.
 
-In a world where AI agents actively participate in building and operating systems, documentation changes in nature. It is no longer an <em>output</em> of work — something produced after coding. It becomes an <em>input</em>: the raw material agents consume to produce, and the active memory humans enrich at each iteration.`,
+In a world where AI agents actively participate in building and operating systems, documentation changes in nature. It is no longer an <em>output</em> of work, something produced after coding. It becomes an <em>input</em>: the raw material agents consume to produce, and the active memory humans enrich at each iteration.`,
     },
     solution: {
       label: 'The answer',
       title: 'Context Nexus.',
-      body: `Not a tool, not a format — a structured, living operational knowledge system, co-built by human actors and AI agents. Its quality determines the quality of everything that emerges from it.
+      body: `Not a tool, not a format: a structured, living operational knowledge system, co-built by human actors and AI agents. Its quality determines the quality of everything that emerges from it.
 
-Designed for <strong>two pizza teams</strong> — autonomous, cross-functional groups bringing together product, UX, engineering, and data — it scales across an organization through an inheritance model.`,
+Designed for two pizza teams (autonomous, cross-functional groups bringing together product, UX, engineering, and data), it scales across an organization through an inheritance model.`,
       invariant:
         'The definition of what we want to build and what we require remains always a human responsibility. Agents can propose, observe, signal — never formulate intent nor set requirements.',
     },
@@ -137,7 +137,7 @@ Designed for <strong>two pizza teams</strong> — autonomous, cross-functional g
     intro: {
       label: 'Definition',
       title: 'What is Context Nexus?',
-      body: `Context Nexus brings together in a single knowledge system everything a team knows, wants, requires, and does — structured to be consumable by AI agents as much as readable by humans.
+      body: `Context Nexus brings together in a single knowledge system everything a team knows, wants, requires, and does, structured to be consumable by AI agents as much as readable by humans.
 
 It distinguishes itself from classic documentation on two points. First, it is oriented toward the future as much as the past: it captures <em>intent</em> (what we want to build) as much as <em>memory</em> (what has been decided). Second, it is not frozen: it is cultivated and refined at each iteration, fed by human contributions and by agents' observations in run, test, and discovery.`,
     },
@@ -145,11 +145,11 @@ It distinguishes itself from classic documentation on two points. First, it is o
       title: 'Two actors, two modes of interaction',
       human: {
         actor: 'Humans',
-        text: 'Conceptualize and feed by intention — specs, architecture decisions, quality contracts, procedures. Intent and Contracts are always authored by humans.',
+        text: 'Conceptualize and feed by intention: specs, architecture decisions, quality contracts, procedures. Intent and Contracts are always authored by humans.',
       },
       ai: {
         actor: 'AI Agents',
-        text: 'Exploit and enrich by observation — consume context to produce, return observations to refine the registers.',
+        text: 'Exploit and enrich by observation: they consume context to produce, return observations to refine the registers.',
       },
     },
     registers: {
@@ -159,9 +159,9 @@ It distinguishes itself from classic documentation on two points. First, it is o
     loops: {
       label: 'Systemic properties',
       title: 'The registers feed each other.',
-      body: `The four registers are not independent — they nourish each other in a circular logic:
+      body: `The four registers are not independent: they nourish each other in a circular logic:
 
-<strong>Knowledge → Intent:</strong> domain knowledge (conventions, Decision Contexts) constrains and refines intentions before an agent begins to produce.
+<strong>Knowledge → Intent:</strong> domain knowledge constrains and refines intentions before an agent begins to produce.
 
 <strong>Intent → Contracts:</strong> specs and product hypotheses determine the quality contract: acceptance criteria become verifiable assertions, SLAs are refined as intentions sharpen.
 
@@ -169,7 +169,7 @@ It distinguishes itself from classic documentation on two points. First, it is o
 
 <strong>Operations → Knowledge:</strong> each resolved incident, each executed procedure becomes collective knowledge capitalized in the Knowledge register.`,
       aiLoopsTitle: 'AI feedback loops',
-      aiLoopsBody: `Beyond register loops, AI agents enrich Context Nexus continuously through their observations — in test, in run, and in discovery:
+      aiLoopsBody: `Beyond register loops, AI agents enrich Context Nexus continuously through their observations, in test, in run, and in discovery:
 
 <strong>In test (Ship):</strong> the agent observes mutation scoring results. An insufficient score bubbles up into Contracts and Knowledge.
 
@@ -190,11 +190,11 @@ It distinguishes itself from classic documentation on two points. First, it is o
       },
       context: {
         title: 'Context Injection',
-        desc: 'Assembled and passed explicitly for a specific task. Neither too early (system prompt), nor on demand (RAG) — the mission context: the current spec, applicable Decision Directives for this ticket.',
+        desc: 'Assembled and passed explicitly for a specific task. Neither too early (system prompt), nor on demand (RAG), the mission context: the current spec, applicable Decision Directives for this ticket.',
       },
       skill: {
         title: 'Skills / Tools (MCP)',
-        desc: "Callable procedures. The agent doesn't read a runbook — it executes it. The quality gate isn't just a known rule — it's a function that returns pass/fail.",
+        desc: "Callable procedures. The agent doesn't read a runbook — it executes it. The quality gate isn't just a known rule, it's a function that returns pass/fail.",
       },
     },
     inheritance: {
@@ -204,7 +204,7 @@ It distinguishes itself from classic documentation on two points. First, it is o
 
 The default three-level structure: <strong>Nexus Org</strong> (root: non-negotiables) → <strong>Nexus Intermediate</strong> (BU / Tribe / Programme, optional) → <strong>Nexus Team</strong> (leaf node, where Intent lives exclusively).
 
-Each level inherits from its parent and can extend it. It can never replace it. A team cannot replace an intermediate or org contract — it can only extend it or, under explicit conditions, declare an exception.`,
+Each level inherits from its parent and can extend it. It can never replace it. A team cannot replace an intermediate or org contract: it can only extend it or, under explicit conditions, declare an exception.`,
       enforcement: {
         title: 'Enforcement mechanism',
         body: 'Each contract carries an optional <code>exception-to</code> field. Without it: pure extension (always allowed). With it: a declared exception, requiring an <code>exception-approved-by</code> field validated by the parent level owner. The Context Assembler blocks any silent bypass.',
@@ -213,8 +213,8 @@ Each level inherits from its parent and can extend it. It can never replace it. 
     governance: {
       label: 'Governance',
       title: 'Update as the path of least resistance.',
-      body: 'Every knowledge base dies the same way: contributions become voluntary, owners change roles, content silently drifts. Context Nexus governance is designed so that updating is the path of least resistance — not an additional discipline.',
-      statuses: 'Each artifact carries lifecycle metadata: <code>draft</code> → <code>active</code> → <code>stale</code> → <code>deprecated</code> / <code>superseded</code>. A stale artifact is flagged but not deleted — it is excluded from system prompts and RAG beyond a configurable threshold.',
+      body: 'Every knowledge base dies the same way: contributions become voluntary, owners change roles, content silently drifts. Context Nexus governance is designed so that updating is the path of least resistance, not an additional discipline.',
+      statuses: 'Each artifact carries lifecycle metadata: <code>draft</code> → <code>active</code> → <code>stale</code> → <code>deprecated</code> / <code>superseded</code>. A stale artifact is flagged but not deleted: it is excluded from system prompts and RAG beyond a configurable threshold.',
     },
     maturity: {
       label: 'Maturity progression',
@@ -233,7 +233,7 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       what: {
         title: 'What does Knowledge contain?',
-        body: 'Domain knowledge · Business glossary · Architecture map · Conventions & patterns · Anti-patterns · Regulatory constraints · <strong>Decision Contexts</strong> · Observed consequences of past decisions.',
+        body: 'Domain knowledge · Business glossary · Architecture map · Conventions & patterns · Anti-patterns · Regulatory constraints · Decision Contexts · Observed consequences of past decisions.',
         decisionContext: {
           title: 'The Decision Context artifact',
           body: 'An artifact derived from splitting the classic ADR. It captures the situation that motivated an architectural decision, the alternatives considered and the justification for their rejection, and the consequences observed post-implementation. It is <em>memory</em>, not a directive.',
@@ -248,8 +248,8 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       consumption: {
         title: 'Consumption modes',
-        systemPrompt: 'Universal conventions and absolute anti-patterns go in the <strong>system prompt</strong>. Short, unambiguous, always true.',
-        rag: 'Decision Contexts, architecture maps, and business glossary go in the <strong>vector index</strong>. Too voluminous for the system prompt, retrieved by RAG on demand.',
+        systemPrompt: 'Universal conventions and absolute anti-patterns go in the system prompt. Short, unambiguous, always true.',
+        rag: 'Decision Contexts, architecture maps, and business glossary go in the vector index. Too voluminous for the system prompt, retrieved by RAG on demand.',
       },
       artifact: {
         title: 'Artifact structure',
@@ -269,7 +269,7 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       what: {
         title: 'What does Intent contain?',
-        body: 'Specs & user stories · Acceptance criteria · Mockups · <strong>Decision Directives</strong> · OKRs & roadmap · Personas · Product hypotheses.',
+        body: 'Specs & user stories · Acceptance criteria · Mockups · Decision Directives · OKRs & roadmap · Personas · Product hypotheses.',
         decisionDirective: {
           title: 'The Decision Directive artifact',
           body: "An artifact derived from splitting the classic ADR. It captures the execution rule from an architectural decision, formulated as a positive, directly applicable constraint. It is an instruction, not an explanation. It references its Decision Context in Knowledge. Example: \"All services in this bounded context must expose an event stream.\"",
@@ -277,7 +277,7 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       invariant: {
         title: 'The fundamental invariant',
-        body: 'This register is covered by the fundamental invariant: its content is <strong>always defined by humans</strong>. An agent executes Intent; it never formulates it.',
+        body: 'This register is covered by the fundamental invariant: its content is always defined by humans. An agent executes Intent; it never formulates it.',
       },
       asymmetry: {
         humanActor: 'Human',
@@ -288,8 +288,8 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       consumption: {
         title: 'Consumption modes',
-        systemPrompt: 'Universal Decision Directives (applicable to all tickets) go in the <strong>system prompt</strong>.',
-        context: 'The current spec, user stories, and task-specific Decision Directives are passed by <strong>context injection</strong>.',
+        systemPrompt: 'Universal Decision Directives (applicable to all tickets) go in the system prompt.',
+        context: 'The current spec, user stories, and task-specific Decision Directives are passed by context injection.',
       },
       crossref: { label: 'See in practice' },
     },
@@ -303,7 +303,7 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       what: {
         title: 'What does Contracts contain?',
-        body: 'Each Contracts entry is a <strong>verifiable assertion</strong>, associated with a threshold, that can be evaluated without human judgment. This criterion — automatable verifiability — defines what belongs to Contracts rather than Intent or Knowledge.',
+        body: 'Each Contracts entry is a verifiable assertion, associated with a threshold, that can be evaluated without human judgment. This criterion — automatable verifiability — defines what belongs to Contracts rather than Intent or Knowledge.',
         domains: {
           engineering: 'Quality gates · Mutation scoring rules · Code coverage thresholds · Definition of Done · Security policies · Performance SLAs · Review & merge rules',
           product: 'Acceptance criteria linked to specs · Product metric thresholds (conversion, retention, activation) · A/B significance thresholds · Feature flag rules',
@@ -313,7 +313,7 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       invariant: {
         title: 'The fundamental invariant',
-        body: 'This register is covered by the fundamental invariant: its content is <strong>always defined by humans</strong>. Agents validate against contracts; they never define them.',
+        body: 'This register is covered by the fundamental invariant: its content is always defined by humans. Agents validate against contracts; they never define them.',
       },
       asymmetry: {
         humanActor: 'Human',
@@ -324,8 +324,8 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       consumption: {
         title: 'Consumption modes',
-        systemPrompt: 'All verifiable assertions (always applicable) go in the <strong>system prompt</strong>.',
-        skills: 'Verification tools (run tests, check accessibility, validate schema) are exposed as <strong>MCP Skills</strong>.',
+        systemPrompt: 'All verifiable assertions (always applicable) go in the system prompt.',
+        skills: 'Verification tools (run tests, check accessibility, validate schema) are exposed as MCP Skills.',
       },
       exception: {
         title: 'Extension vs. exception vs. override',
@@ -357,12 +357,12 @@ Each level inherits from its parent and can extend it. It can never replace it. 
       },
       consumption: {
         title: 'Consumption modes',
-        rag: 'Incident search and operational context retrieval via <strong>RAG</strong>.',
-        skills: 'Repeatable runbooks and playbooks encapsulated as executable <strong>MCP Skills</strong>.',
+        rag: 'Incident search and operational context retrieval via RAG.',
+        skills: 'Repeatable runbooks and playbooks encapsulated as executable MCP Skills.',
       },
       mcp: {
         title: 'Runbooks as MCP Skills',
-        body: 'Runbooks are not just documented — they are encapsulated as callable tools. The agent does not read a runbook linearly — it invokes it with parameters and gets back a structured result.',
+        body: 'Runbooks are not just documented: they are encapsulated as callable tools. The agent does not read a runbook linearly — it invokes it with parameters and gets back a structured result.',
       },
       crossref: { label: 'See in practice' },
     },
@@ -410,7 +410,7 @@ Each level inherits from its parent and can extend it. It can never replace it. 
     multiagent: {
       label: 'Advanced',
       title: 'Multi-agent architecture.',
-      body: 'In a multi-agent context, the Context Assembler becomes an orchestrating agent. It receives a complex task, decomposes it, creates a specialized task brief for each sub-task, and delegates to worker agents. Each worker operates with its own isolated context — exactly Deep Agents mode: sub-agents see only final results, not intermediate steps of others.',
+      body: 'In a multi-agent context, the Context Assembler becomes an orchestrating agent. It receives a complex task, decomposes it, creates a specialized task brief for each sub-task, and delegates to worker agents. Each worker operates with its own isolated context, exactly Deep Agents mode: sub-agents see only final results, not intermediate steps of others.',
     },
     bootstrap: {
       label: 'Bootstrap',
@@ -431,7 +431,7 @@ Each level inherits from its parent and can extend it. It can never replace it. 
     header: {
       breadcrumb: 'Home',
       title: 'The Framework in Action',
-      desc: 'team-search @ MarketPlace SA — A real team story spanning four episodes: an ADR, a sprint, an incident, and a product signal.',
+      desc: 'team-search @ MarketPlace SA — the journey of one team across four episodes: an ADR, a sprint, an incident, and a product signal.',
     },
     scene: {
       label: 'The scene',
@@ -473,11 +473,11 @@ Each level inherits from its parent and can extend it. It can never replace it. 
         },
         gate: {
           title: 'The quality gate fails',
-          body: "The agent generates the pipeline. It invokes the performance-test.mcp skill before proposing the code. P95 reads 340ms — above the 200ms threshold. Bottleneck identified: synchronous per-document writes to Elasticsearch in the Kafka consumer. The agent does not propose the code. It raises the observation and proposes a correction: switch to bulk writes with a 50ms flush window and 100-document batch. Marcus validates. The agent generates the corrected code, reruns the test, obtains P95 = 138ms. The gate passes.",
+          body: "The agent generates the pipeline. It invokes the performance-test.mcp skill before proposing the code. P95 reads 340ms, above the 200ms threshold. Bottleneck identified: synchronous per-document writes to Elasticsearch in the Kafka consumer. The agent does not propose the code. It raises the observation and proposes a correction: switch to bulk writes with a 50ms flush window and 100-document batch. Marcus validates. The agent generates the corrected code, reruns the test, obtains P95 = 138ms. The gate passes.",
         },
         contracts: {
           title: 'A Contracts update follows',
-          body: 'Marcus notices the 200ms threshold in Contracts was calibrated for synchronous pipelines. It does not account for the flush latency inherent to asynchronous bulk writers. He updates the team\'s Contracts to add a separate P95 ≤ 80ms threshold for the bulk writer alone — leaving a 120ms budget for Kafka transit.',
+          body: 'Marcus notices the 200ms threshold in Contracts was calibrated for synchronous pipelines. It does not account for the flush latency inherent to asynchronous bulk writers. He updates the team\'s Contracts to add a separate P95 ≤ 80ms threshold for the bulk writer alone, leaving a 120ms budget for Kafka transit.',
         },
         insight: "The agent did not submit failing code. It verified before proposing, self-corrected, and blocked until compliance. The Contracts were not perfect: a miscalibrated gate was identified and corrected. This is the Ship loop: the observation bubbles up into Contracts.",
       },
@@ -513,11 +513,11 @@ Each level inherits from its parent and can extend it. It can never replace it. 
         },
         tension: {
           title: 'The tension with Contracts',
-          body: "This revision creates a direct tension with the org performance Contracts (P95 < 200ms for all requests). Requests with multi-criteria boosting structurally exceed this threshold: their observed P95 is 320ms. The team cannot simply modify the org Contracts — they must declare an exception.",
+          body: "This revision creates a direct tension with the org performance Contracts (P95 < 200ms for all requests). Requests with multi-criteria boosting structurally exceed this threshold: their observed P95 is 320ms. The team cannot simply modify the org Contracts: they must declare an exception.",
         },
         exception: {
           title: 'The exception workflow',
-          body: "Marcus prepares the team contract with exception-to pointing to org/contracts/performance.md. The Context Assembler detects that exception-approved-by is null — it blocks inclusion of this contract in the system prompt until validation. Marcus submits it to the BU Digital Products quality lead. Three days later, the BU lead validates. The Context Assembler now includes the exception in the context of team-search agents.",
+          body: "Marcus prepares the team contract with exception-to pointing to org/contracts/performance.md. The Context Assembler detects that exception-approved-by is null: it blocks inclusion of this contract in the system prompt until validation. Marcus submits it to the BU Digital Products quality lead. Three days later, the BU lead validates. The Context Assembler now includes the exception in the context of team-search agents.",
         },
         insight: "A discovery observation (Shape) modified a product hypothesis in Intent. This modification created a tension with a parent Contract. Enforcement played its role: no silent bypass, a documented and approved exception. The org retains visibility. The team retains autonomy within the explicitly negotiated scope.",
       },

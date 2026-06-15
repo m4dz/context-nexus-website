@@ -2,7 +2,7 @@ export default {
   site: {
     title: 'Context Nexus',
     description:
-      "Un système de connaissance vivant, co-construit par des humains et des agents IA — le cœur systémique que toute l'équipe alimente par l'intention, et que l'IA enrichit par l'observation.",
+      "Un système de connaissance vivant, co-construit par des humains et des agents IA : le cœur systémique que toute l'équipe alimente par l'intention, et que l'IA enrichit par l'observation.",
   },
 
   nav: {
@@ -49,14 +49,14 @@ export default {
       title: 'La documentation était du poids mort.',
       body: `Les entreprises sont assises sur une montagne de connaissance accumulée : décisions prises, règles métier codifiées, intentions de demain. Une montagne largement inexploitée et peu structurée.
 
-Dans un contexte où des agents IA participent activement à la construction et à l'exploitation des systèmes, la documentation change de nature fondamentalement. Elle n'est plus un <em>output</em> du travail — quelque chose qu'on produit après avoir codé. Elle devient un <em>input</em> : le matériau brut que les agents consomment pour produire, et la mémoire active que les humains enrichissent à chaque itération.`,
+Dans un contexte où des agents IA participent activement à la construction et à l'exploitation des systèmes, la documentation change de nature. Elle n'est plus un <em>output</em> du travail, ce qu'on produit après avoir codé. Elle devient un <em>input</em> : le matériau brut que les agents consomment pour produire, et la mémoire active que les humains enrichissent à chaque itération.`,
     },
     solution: {
       label: 'La réponse',
       title: 'Le Context Nexus.',
       body: `Ce n'est pas un outil ni un format : c'est un système de connaissance opérationnelle, structuré et vivant, co-construit par des acteurs humains et des agents IA. Sa qualité détermine la qualité de tout ce qui en sort.
 
-Conçu pour opérer à l'échelle d'une <strong>two pizza team</strong> — une équipe pluridisciplinaire autonome réunissant produit, UX, engineering et data — il se compose à l'échelle d'une organisation via une logique d'héritage.`,
+Conçu pour opérer à l'échelle d'une two pizza team (une équipe pluridisciplinaire autonome réunissant produit, UX, engineering et data), il se compose à l'échelle d'une organisation via une logique d'héritage.`,
       invariant:
         "La définition de ce qu'on veut construire et de ce qu'on exige reste toujours une responsabilité humaine. Les agents peuvent proposer, observer, signaler — jamais formuler l'intention ni fixer les exigences.",
     },
@@ -137,7 +137,7 @@ Conçu pour opérer à l'échelle d'une <strong>two pizza team</strong> — une 
     intro: {
       label: 'Définition',
       title: "Qu'est-ce que le Context Nexus ?",
-      body: `Le Context Nexus réunit en un seul système de connaissance tout ce que l'équipe sait, veut, exige et fait — structuré pour être consommable par des agents IA autant que lisible par des humains.
+      body: `Le Context Nexus réunit en un seul système de connaissance tout ce que l'équipe sait, veut, exige et fait, structuré pour être consommable par des agents IA autant que lisible par des humains.
 
 Il se distingue d'une documentation classique sur deux points. D'abord, il est orienté vers le futur autant que vers le passé : il capture l'<em>intention</em> (ce qu'on veut construire) autant que la <em>mémoire</em> (ce qui a été décidé). Ensuite, il n'est pas figé : il se cultive et s'affine à chaque itération, nourri par les contributions humaines et les observations des agents en run, en test et en discovery.`,
     },
@@ -145,11 +145,11 @@ Il se distingue d'une documentation classique sur deux points. D'abord, il est o
       title: "Deux acteurs, deux modes d'interaction",
       human: {
         actor: 'Humains',
-        text: "Conceptualisent et alimentent par l'intention — specs, décisions d'architecture, contrats de qualité, procédures. Intent et Contracts sont toujours définis par des humains.",
+        text: "Conceptualisent et alimentent par l'intention : specs, décisions d'architecture, contrats de qualité, procédures. Intent et Contracts sont toujours définis par des humains.",
       },
       ai: {
         actor: 'Agents IA',
-        text: "Exploitent et enrichissent par l'observation — consomment le contexte pour produire, remontent leurs observations pour affiner les registres.",
+        text: "Exploitent et enrichissent par l'observation : ils consomment le contexte pour produire, remontent leurs observations pour affiner les registres.",
       },
     },
     registers: {
@@ -159,9 +159,9 @@ Il se distingue d'une documentation classique sur deux points. D'abord, il est o
     loops: {
       label: 'Propriétés systémiques',
       title: 'Les registres se nourrissent mutuellement.',
-      body: `Les quatre registres ne sont pas indépendants — ils se nourrissent mutuellement selon une logique circulaire :
+      body: `Les quatre registres ne sont pas indépendants : ils se nourrissent mutuellement selon une logique circulaire :
 
-<strong>Knowledge → Intent :</strong> la connaissance du domaine (conventions, Decision Contexts) contraint et précise les intentions avant même qu'un agent commence à produire.
+<strong>Knowledge → Intent :</strong> la connaissance du domaine contraint et précise les intentions avant même qu'un agent commence à produire.
 
 <strong>Intent → Contracts :</strong> les specs et hypothèses produit déterminent le contrat de qualité : les critères d'acceptance deviennent des assertions vérifiables, les SLAs se précisent à mesure que les intentions s'affinent.
 
@@ -169,7 +169,7 @@ Il se distingue d'une documentation classique sur deux points. D'abord, il est o
 
 <strong>Operations → Knowledge :</strong> chaque incident résolu, chaque procédure exécutée devient de la connaissance collective capitalisée dans le registre Knowledge.`,
       aiLoopsTitle: 'Boucles de feedback IA',
-      aiLoopsBody: `Au-delà des boucles entre registres, les agents IA enrichissent le Context Nexus en continu par leurs observations — en test, en run et en discovery :
+      aiLoopsBody: `Au-delà des boucles entre registres, les agents IA enrichissent le Context Nexus en continu par leurs observations, en test, en run et en discovery :
 
 <strong>En test (Ship) :</strong> l'agent observe les résultats du mutation scoring. Un score insuffisant remonte dans Contracts et dans Knowledge.
 
@@ -190,7 +190,7 @@ Il se distingue d'une documentation classique sur deux points. D'abord, il est o
       },
       context: {
         title: 'Context Injection',
-        desc: "Assemblé et passé explicitement pour une tâche spécifique. Ni trop tôt (system prompt), ni à la demande (RAG) — c'est le contexte de mission : la spec en cours, les Decision Directives applicables à ce ticket.",
+        desc: "Assemblé et passé explicitement pour une tâche spécifique. Ni trop tôt (system prompt), ni à la demande (RAG), c'est le contexte de mission : la spec en cours, les Decision Directives applicables à ce ticket.",
       },
       skill: {
         title: 'Skills / Tools (MCP)',
@@ -204,7 +204,7 @@ Il se distingue d'une documentation classique sur deux points. D'abord, il est o
 
 La structure par défaut à trois niveaux : <strong>Nexus Org</strong> (racine : non-négociables) → <strong>Nexus Intermédiaire</strong> (BU / Tribe / Programme, optionnel) → <strong>Nexus Team</strong> (nœud feuille, là où Intent vit exclusivement).
 
-Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le remplacer. Une team ne peut pas remplacer un contract intermédiaire ou org — elle peut seulement l'étendre ou, sous conditions explicites, y déclarer une exception.`,
+Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le remplacer. Une team ne peut pas remplacer un contract intermédiaire ou org : elle peut seulement l'étendre ou, sous conditions explicites, y déclarer une exception.`,
       enforcement: {
         title: "Mécanisme d'enforcement",
         body: "Chaque contract porte un champ <code>exception-to</code> optionnel. Sans ce champ : extension pure (toujours autorisée). Avec ce champ : exception déclarée, exigeant un champ <code>exception-approved-by</code> validé par l'owner du niveau parent. Le Context Assembler bloque tout bypass silencieux.",
@@ -214,7 +214,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       label: 'Gouvernance',
       title: 'La mise à jour comme chemin de moindre résistance.',
       body: 'Toute base de connaissance meurt de la même façon : les contributions deviennent volontaires, les owners changent de poste, le contenu dérive silencieusement. La gouvernance du Context Nexus est conçue pour que la mise à jour soit le chemin de moindre résistance, pas une discipline supplémentaire.',
-      statuses: "Chaque artefact porte des métadonnées de cycle de vie : <code>draft</code> → <code>active</code> → <code>stale</code> → <code>deprecated</code> / <code>superseded</code>. Un artefact au statut stale est signalé mais pas supprimé — il est exclu du system prompt et du RAG au-delà d'un seuil configurable.",
+      statuses: "Chaque artefact porte des métadonnées de cycle de vie : <code>draft</code> → <code>active</code> → <code>stale</code> → <code>deprecated</code> / <code>superseded</code>. Un artefact au statut stale est signalé mais pas supprimé : il est exclu du system prompt et du RAG au-delà d'un seuil configurable.",
     },
     maturity: {
       label: 'Progression de maturité',
@@ -233,7 +233,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       what: {
         title: 'Que contient Knowledge ?',
-        body: 'Domain knowledge · Glossaire métier · Architecture map · Conventions & patterns · Anti-patterns · Contraintes réglementaires · <strong>Decision Contexts</strong> · Conséquences observées des décisions passées.',
+        body: 'Domain knowledge · Glossaire métier · Architecture map · Conventions & patterns · Anti-patterns · Contraintes réglementaires · Decision Contexts · Conséquences observées des décisions passées.',
         decisionContext: {
           title: "L'artefact Decision Context",
           body: "Issu du découpage de l'ADR classique. Il capture la situation qui a motivé une décision architecturale, les alternatives considérées et la justification de leur rejet, et les conséquences observées post-implémentation. C'est de la mémoire, pas une directive.",
@@ -248,8 +248,8 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       consumption: {
         title: 'Modes de consommation',
-        systemPrompt: 'Les conventions universelles et anti-patterns absolus vont dans le <strong>system prompt</strong>. Courts, sans nuance, toujours vrais.',
-        rag: "Les Decision Contexts, l'architecture map et le glossaire métier vont dans l'<strong>index vectoriel</strong>. Trop volumineux pour le system prompt, récupérés par RAG à la demande.",
+        systemPrompt: 'Les conventions universelles et anti-patterns absolus vont dans le system prompt. Courts, sans nuance, toujours vrais.',
+        rag: "Les Decision Contexts, l'architecture map et le glossaire métier vont dans l'index vectoriel. Trop volumineux pour le system prompt, récupérés par RAG à la demande.",
       },
       artifact: {
         title: "Structure d'un artefact",
@@ -267,7 +267,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       what: {
         title: 'Que contient Intent ?',
-        body: "Specs & user stories · Critères d'acceptance · Maquettes · <strong>Decision Directives</strong> · OKRs & roadmap · Personas · Hypothèses produit.",
+        body: "Specs & user stories · Critères d'acceptance · Maquettes · Decision Directives · OKRs & roadmap · Personas · Hypothèses produit.",
         decisionDirective: {
           title: "L'artefact Decision Directive",
           body: "Issu du découpage de l'ADR classique. Il capture la règle d'exécution issue d'une décision architecturale, formulée comme une contrainte positive et directement applicable. C'est une instruction, pas une explication. Elle référence son Decision Context dans Knowledge. Exemple : « Tout service de ce bounded context doit exposer un event stream. »",
@@ -275,7 +275,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       invariant: {
         title: "L'invariante fondamentale",
-        body: "Ce registre est couvert par l'invariante fondamentale : son contenu est <strong>toujours défini par des humains</strong>. Un agent exécute l'Intent ; il ne le formule jamais.",
+        body: "Ce registre est couvert par l'invariante fondamentale : son contenu est toujours défini par des humains. Un agent exécute l'Intent ; il ne le formule jamais.",
       },
       asymmetry: {
         humanActor: 'Humain',
@@ -286,8 +286,8 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       consumption: {
         title: 'Modes de consommation',
-        systemPrompt: 'Les Decision Directives universelles (applicables à tous les tickets) vont dans le <strong>system prompt</strong>.',
-        context: 'La spec en cours, les user stories et les Decision Directives task-specific sont passées par <strong>context injection</strong>.',
+        systemPrompt: 'Les Decision Directives universelles (applicables à tous les tickets) vont dans le system prompt.',
+        context: 'La spec en cours, les user stories et les Decision Directives task-specific sont passées par context injection.',
       },
       crossref: { label: 'Voir en pratique' },
     },
@@ -301,7 +301,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       what: {
         title: 'Que contient Contracts ?',
-        body: "Chaque entrée du registre Contracts est une <strong>assertion vérifiable</strong>, associée à un seuil, qui peut être évaluée sans jugement humain. C'est ce critère — la vérifiabilité automatisable — qui définit ce qui appartient à Contracts plutôt qu'à Intent ou Knowledge.",
+        body: "Chaque entrée du registre Contracts est une assertion vérifiable, associée à un seuil, qui peut être évaluée sans jugement humain. C'est ce critère — la vérifiabilité automatisable — qui définit ce qui appartient à Contracts plutôt qu'à Intent ou Knowledge.",
         domains: {
           engineering: 'Quality gates · Mutation scoring rules · Taux de couverture · Definition of Done · Politiques de sécurité · SLAs de performance · Règles de review & merge',
           product: "Critères d'acceptance liés aux specs · Seuils de métriques produit (conversion, rétention) · Seuils de significativité A/B · Règles de feature flag",
@@ -311,7 +311,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       invariant: {
         title: "L'invariante fondamentale",
-        body: "Ce registre est couvert par l'invariante fondamentale : son contenu est <strong>toujours défini par des humains</strong>. Les agents valident contre les Contracts ; ils ne les définissent jamais.",
+        body: "Ce registre est couvert par l'invariante fondamentale : son contenu est toujours défini par des humains. Les agents valident contre les Contracts ; ils ne les définissent jamais.",
       },
       asymmetry: {
         humanActor: 'Humain',
@@ -322,8 +322,8 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       consumption: {
         title: 'Modes de consommation',
-        systemPrompt: "L'ensemble des assertions vérifiables (toujours applicables) vont dans le <strong>system prompt</strong>.",
-        skills: 'Les outils de vérification (run tests, check accessibilité, valider schéma) sont exposés comme <strong>MCP Skills</strong>.',
+        systemPrompt: "L'ensemble des assertions vérifiables (toujours applicables) vont dans le system prompt.",
+        skills: 'Les outils de vérification (run tests, check accessibilité, valider schéma) sont exposés comme MCP Skills.',
       },
       exception: {
         title: 'Extension vs exception vs override',
@@ -355,8 +355,8 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
       },
       consumption: {
         title: 'Modes de consommation',
-        rag: "Recherche d'incident et récupération de contexte opérationnel par <strong>RAG</strong>.",
-        skills: 'Runbooks et playbooks répétables encapsulés comme <strong>MCP Skills</strong> exécutables.',
+        rag: "Recherche d'incident et récupération de contexte opérationnel par RAG.",
+        skills: 'Runbooks et playbooks répétables encapsulés comme MCP Skills exécutables.',
       },
       mcp: {
         title: 'Runbooks comme MCP Skills',
@@ -408,7 +408,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
     multiagent: {
       label: 'Architecture avancée',
       title: 'Architecture multi-agents.',
-      body: "Dans un contexte multi-agents, le Context Assembler devient un agent orchestrateur. Il reçoit une tâche complexe, la décompose, crée un task brief spécialisé pour chaque sous-tâche, et délègue à des agents workers. Chaque worker opère avec son propre contexte isolé — exactement le mode de fonctionnement de Deep Agents.",
+      body: "Dans un contexte multi-agents, le Context Assembler devient un agent orchestrateur. Il reçoit une tâche complexe, la décompose, crée un task brief spécialisé pour chaque sous-tâche, et délègue à des agents workers. Chaque worker opère avec son propre contexte isolé, exactement le mode de fonctionnement de Deep Agents.",
     },
     bootstrap: {
       label: 'Bootstrap',
@@ -429,7 +429,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
     header: {
       breadcrumb: 'Accueil',
       title: 'Le Framework en Action',
-      desc: "team-search @ MarketPlace SA — L'histoire réelle d'une équipe en quatre épisodes : un ADR, un sprint, un incident, et un signal produit.",
+      desc: "team-search @ MarketPlace SA — le parcours d'une équipe en quatre épisodes : un ADR, un sprint, un incident, et un signal produit.",
     },
     scene: {
       label: 'La scène',
@@ -471,7 +471,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
         },
         gate: {
           title: 'Le quality gate échoue',
-          body: "L'agent génère le pipeline. Il invoque le skill performance-test.mcp avant de proposer le code. La P95 est à 340ms — au-dessus du seuil de 200ms. Goulot d'étranglement identifié : écriture synchrone par message vers Elasticsearch dans le consumer Kafka. L'agent ne propose pas le code. Il remonte l'observation et propose une correction : passer à un bulk write avec fenêtre de 50ms et batch de 100 documents. Marcus valide. L'agent génère le code corrigé, relance le test, obtient P95 = 138ms. Le gate passe.",
+          body: "L'agent génère le pipeline. Il invoque le skill performance-test.mcp avant de proposer le code. La P95 est à 340ms, au-dessus du seuil de 200ms. Goulot d'étranglement identifié : écriture synchrone par message vers Elasticsearch dans le consumer Kafka. L'agent ne propose pas le code. Il remonte l'observation et propose une correction : passer à un bulk write avec fenêtre de 50ms et batch de 100 documents. Marcus valide. L'agent génère le code corrigé, relance le test, obtient P95 = 138ms. Le gate passe.",
         },
         contracts: {
           title: "Une mise à jour Contracts s'ensuit",
@@ -511,11 +511,11 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
         },
         tension: {
           title: 'La tension avec Contracts',
-          body: 'Cette révision crée une tension directe avec le Contracts org de performance (P95 < 200ms pour toutes les requêtes). Les requêtes avec boosting multi-critères dépassent structurellement ce seuil : leur P95 observé est de 320ms. La team ne peut pas simplement modifier le Contracts org — elle doit déclarer une exception.',
+          body: 'Cette révision crée une tension directe avec le Contracts org de performance (P95 < 200ms pour toutes les requêtes). Les requêtes avec boosting multi-critères dépassent structurellement ce seuil : leur P95 observé est de 320ms. La team ne peut pas simplement modifier le Contracts org : elle doit déclarer une exception.',
         },
         exception: {
           title: "Le workflow d'exception",
-          body: "Marcus prépare le contract team avec exception-to pointant vers org/contracts/performance.md. Le Context Assembler détecte que exception-approved-by est null — il bloque l'inclusion de ce contract dans le system prompt jusqu'à validation. Marcus le soumet au responsable qualité de la BU Digital Products. Trois jours plus tard, le responsable BU valide. Le Context Assembler inclut désormais l'exception dans le contexte des agents de la team-search.",
+          body: "Marcus prépare le contract team avec exception-to pointant vers org/contracts/performance.md. Le Context Assembler détecte que exception-approved-by est null : il bloque l'inclusion de ce contract dans le system prompt jusqu'à validation. Marcus le soumet au responsable qualité de la BU Digital Products. Trois jours plus tard, le responsable BU valide. Le Context Assembler inclut désormais l'exception dans le contexte des agents de la team-search.",
         },
         insight: "Une observation de discovery (Shape) a modifié une hypothèse produit dans Intent. Cette modification a créé une tension avec un Contracts parent. L'enforcement a joué son rôle : pas de bypass silencieux, une exception documentée et approuvée. L'org garde la visibilité. La team garde l'autonomie dans le périmètre de ce qui est explicitement négocié.",
       },
@@ -538,7 +538,7 @@ Chaque niveau hérite de son parent et peut l'étendre. Il ne peut jamais le rem
         ['Validation cross-niveaux (team → BU)', '4'],
         ['Context Assembler bloquant un contract non approuvé', '4'],
       ],
-      insight: "Le fil rouge ne montre pas un cas idéal. Il montre un cas réel : une équipe qui décide, se trompe sur un seuil, subit un incident, révise une hypothèse. Le Context Nexus n'empêche pas ces situations. Il fait en sorte que chaque événement enrichisse le système plutôt que de se perdre.",
+      insight: "Le fil rouge ne montre pas un cas idéal. Il montre un cas réaliste : une équipe qui décide, se trompe sur un seuil, subit un incident, révise une hypothèse. Le Context Nexus n'empêche pas ces situations. Il fait en sorte que chaque événement enrichisse le système plutôt que de se perdre.",
     },
     crossref: { label: 'Explorer les registres en profondeur' },
   },
