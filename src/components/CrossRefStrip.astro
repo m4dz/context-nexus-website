@@ -1,6 +1,6 @@
 ---
 import RegisterChip from './RegisterChip.astro'
-import { type Lang } from '../i18n'
+import { useTranslations, type Lang } from '../i18n'
 
 type Register = 'knowledge' | 'intent' | 'contracts' | 'operations'
 
@@ -14,12 +14,15 @@ interface Props {
 const { lang, label, registers, extra = [] } = Astro.props
 
 const base = `/${lang}/registers`
+const t = useTranslations(lang)
 
+// Register names are framework proper nouns; reuse the nav block's strings
+// so a future translation change updates chips and nav together.
 const registerLabels: Record<Register, string> = {
-  knowledge:  'Knowledge',
-  intent:     'Intent',
-  contracts:  'Contracts',
-  operations: 'Operations',
+  knowledge:  t.nav.knowledge,
+  intent:     t.nav.intent,
+  contracts:  t.nav.contracts,
+  operations: t.nav.operations,
 }
 ---
 
@@ -34,7 +37,7 @@ const registerLabels: Record<Register, string> = {
       />
     ))}
     {extra.map(e => (
-      <a href={e.href} class="chip chip--knowledge" style="background:var(--bg-elevated);color:var(--text-muted);border-color:var(--border)">{e.label}</a>
+      <a href={e.href} class="chip chip--neutral">{e.label}</a>
     ))}
   </div>
 </div>
