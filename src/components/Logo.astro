@@ -1,0 +1,18 @@
+---
+interface Props {
+  size?: number
+  alt?: string
+  class?: string
+}
+
+const { size = 24, alt = '', class: className } = Astro.props
+---
+
+<img
+  src="/context-nexus-logo.svg"
+  width={size}
+  height={size}
+  alt={alt}
+  class={className}
+  {...alt === '' ? { 'aria-hidden': 'true' } : {}}
+/>

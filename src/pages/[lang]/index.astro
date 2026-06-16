@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro'
 import RegisterCard from '../../components/RegisterCard.astro'
 import Callout from '../../components/Callout.astro'
 import Timeline from '../../components/Timeline.astro'
+import Logo from '../../components/Logo.astro'
 import { useTranslations, type Lang } from '../../i18n'
 
 export function getStaticPaths() {
@@ -21,10 +22,17 @@ const base = `/${lang}`
   <section class="hero">
     <div class="graph-bg"></div>
     <div class="container container--content">
-      <div class="hero__label">{h.hero.label}</div>
-      <h1 class="hero__title">{h.hero.title}</h1>
-      <p class="hero__tagline">"{h.hero.tagline}"</p>
-      <p class="hero__description">{h.hero.description}</p>
+      <div class="hero__layout">
+        <div class="hero__media">
+          <Logo size={320} class="hero__logo" />
+        </div>
+        <div class="hero__text">
+          <div class="hero__label">{h.hero.label}</div>
+          <h1 class="hero__title">{h.hero.title}</h1>
+          <p class="hero__tagline">"{h.hero.tagline}"</p>
+          <p class="hero__description">{h.hero.description}</p>
+        </div>
+      </div>
       <div class="hero__actions">
         <a href={h.hero.cta1Href} class="btn btn--primary">{h.hero.cta1}</a>
         <a href={h.hero.cta2Href} class="btn btn--secondary">{h.hero.cta2}</a>

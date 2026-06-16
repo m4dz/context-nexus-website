@@ -1,5 +1,6 @@
 ---
 import { useTranslations, type Lang } from '../i18n'
+import Logo from './Logo.astro'
 
 interface Props { lang: Lang }
 const { lang } = Astro.props
@@ -13,7 +14,7 @@ const langSwitchHref = current.replace(new RegExp(`^/${lang}(?=/|$)`), `/${other
 <nav class="nav">
   <div class="container nav__inner">
     <a href={base} class="nav__logo">
-      <span class="nav__logo-dot"></span>
+      <Logo size={24} />
       Context Nexus
     </a>
 
@@ -94,7 +95,7 @@ const langSwitchHref = current.replace(new RegExp(`^/${lang}(?=/|$)`), `/${other
 <div class="nav__drawer" id="nav-drawer" aria-hidden="true">
   <div class="nav__drawer-header">
     <a href={base} class="nav__logo">
-      <span class="nav__logo-dot"></span>
+      <Logo size={24} />
       Context Nexus
     </a>
     <button class="nav__drawer-close" id="nav-drawer-close" aria-label="Close menu">

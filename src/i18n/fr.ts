@@ -20,7 +20,8 @@ export default {
   },
 
   footer: {
-    copy: '© 2026 Context Nexus · Un framework inspiré chez Zenika, produit non-officiel.',
+    copyBefore: '© 2026 Context Nexus · Un framework inspiré chez ',
+    copyAfter: ', produit non-officiel.',
     links: [
       { label: 'Concepts', href: '/fr/concepts' },
       { label: 'Implémentation', href: '/fr/implementation' },

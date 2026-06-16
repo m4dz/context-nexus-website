@@ -259,12 +259,9 @@ hr {
   gap: 0.5rem;
 }
 
-.nav__logo-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--accent);
+.nav__logo img {
+  display: block;
+  flex-shrink: 0;
 }
 
 .nav__links {
@@ -340,6 +337,28 @@ hr {
   background:
     radial-gradient(ellipse 60% 40% at 50% -10%, rgba(129,140,248,0.12) 0%, transparent 70%);
   pointer-events: none;
+}
+
+.hero__layout {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  margin-bottom: 1.5rem;
+}
+
+.hero__media {
+  flex: 0 0 auto;
+}
+
+.hero__text {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.hero__logo {
+  display: block;
+  height: clamp(180px, 22vw, 320px);
+  width: auto;
 }
 
 .hero__label {
@@ -883,6 +902,16 @@ hr {
 
 .footer__links a:hover { color: var(--text-muted); }
 
+.footer__zenika {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: -0.3em;
+  color: inherit;
+  transition: opacity 0.15s;
+}
+
+.footer__zenika:hover { opacity: 0.7; }
+
 /* ── Graph decoration ──────────────────────────────────────── */
 .graph-bg {
   position: absolute;
@@ -1047,6 +1076,8 @@ hr {
   .nav__links { display: none; }
   .nav__burger { display: flex; }
   .hero { padding: 4rem 0 3rem; }
+  .hero__layout { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .hero__logo { height: 120px; width: auto; }
   .section { padding: 3rem 0; }
   .page-header { padding: 3rem 0 2rem; }
   .asymmetry { grid-template-columns: 1fr; }
